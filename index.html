@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Who's Working, Who's Struggling — Malaysia's Labour Market</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #f9f9f9; }
+    h1 { margin-bottom: 2rem; }
+    .chart-container {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      width: 100%;
+    }
+    .chart-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Who's Working, Who's Struggling — Malaysia's Labour Market (2021–2025)</h1>
+
+  <!-- Chart 2 -->
+  <div class="chart-container">
+    <div class="chart-title">Chart 2 — Unemployment Rate Trend</div>
+    <div id="chart2"></div>
+  </div>
+
+  <!-- Chart 5 -->
+  <div class="chart-container">
+    <div class="chart-title">Chart 5 — Youth vs National Unemployment</div>
+    <div id="chart5"></div>
+  </div>
+
+  <!-- Chart 8 -->
+  <div class="chart-container">
+    <div class="chart-title">Chart 8 — Unemployment Rate by State</div>
+    <div id="chart8"></div>
+  </div>
+
+  <!-- Chart 12 -->
+  <div class="chart-container">
+    <div class="chart-title">Chart 12 — Mean Wage by Age Group (2024)</div>
+    <div id="chart12"></div>
+  </div>
+
+  <!-- Chart 13 -->
+  <div class="chart-container">
+    <div class="chart-title">Chart 13 — National Median Wage Trend</div>
+    <div id="chart13"></div>
+  </div>
+
+  <script>
+    vegaEmbed('#chart2',  'charts/unemployment_trend.json',            { actions: false });
+    vegaEmbed('#chart5',  'charts/youth_vs_national_unemployment.json', { actions: false });
+    vegaEmbed('#chart8',  'charts/unemployment_by_state.json',          { actions: false });
+    vegaEmbed('#chart12', 'charts/wage_by_age_group.json',              { actions: false });
+    vegaEmbed('#chart13', 'charts/wages_national_median.json',          { actions: false });
+  </script>
+
+</body>
+</html>

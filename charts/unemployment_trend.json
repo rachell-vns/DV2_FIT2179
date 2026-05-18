@@ -1,0 +1,74 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Malaysia's Unemployment Rate (2021–2025)",
+    "subtitle": "Monthly unemployment rate as a percentage of the labour force",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "anchor": "start",
+    "fontWeight": "normal",
+    "subtitleColor": "#666"
+  },
+  "width": "container",
+  "height": 300,
+  "data": { "url": "data/lfs_month.csv" },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "color": "#378ADD",
+        "strokeWidth": 2.5,
+        "point": false
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "title": null,
+          "axis": { "format": "%b %Y", "labelAngle": -30, "tickCount": 12 }
+        },
+        "y": {
+          "field": "u_rate",
+          "type": "quantitative",
+          "title": "Unemployment Rate (%)",
+          "scale": { "zero": false },
+          "axis": { "grid": true, "gridColor": "#f0f0f0" }
+        },
+        "tooltip": [
+          { "field": "date", "type": "temporal", "title": "Month", "format": "%B %Y" },
+          { "field": "u_rate", "type": "quantitative", "title": "Rate (%)", "format": ".1f" }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#ccc",
+        "strokeDash": [4, 4],
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "y": { "datum": 3.5, "type": "quantitative" }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -4,
+        "dy": -8,
+        "fontSize": 11,
+        "color": "#999"
+      },
+      "encoding": {
+        "x": { "datum": "2025-01-01", "type": "temporal" },
+        "y": { "datum": 3.5, "type": "quantitative" },
+        "text": { "value": "Pre-pandemic avg ~3.5%" }
+      }
+    }
+  ],
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "grid": false, "labelFont": "sans-serif", "titleFont": "sans-serif" }
+  }
+}
