@@ -11,7 +11,7 @@
   },
   "width": 600,
   "height": 300,
-  "data": { "url": "data/lfs_month.csv" },
+  "data": { "url": "https://github.com/rachell-vns/DV2_FIT2179/blob/main/data/lfs_month.csv" },
   "transform": [
     { "filter": "year(datum.date) >= 2021" }
   ],
