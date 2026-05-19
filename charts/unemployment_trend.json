@@ -9,16 +9,18 @@
     "fontWeight": "normal",
     "subtitleColor": "#666"
   },
-  "width": "container",
+  "width": 600,
   "height": 300,
   "data": { "url": "data/lfs_month.csv" },
+  "transform": [
+    { "filter": "year(datum.date) >= 2021" }
+  ],
   "layer": [
     {
       "mark": {
         "type": "line",
         "color": "#378ADD",
-        "strokeWidth": 2.5,
-        "point": false
+        "strokeWidth": 2.5
       },
       "encoding": {
         "x": {
@@ -43,7 +45,7 @@
     {
       "mark": {
         "type": "rule",
-        "color": "#ccc",
+        "color": "#aaa",
         "strokeDash": [4, 4],
         "strokeWidth": 1
       },
@@ -54,14 +56,14 @@
     {
       "mark": {
         "type": "text",
-        "align": "right",
-        "dx": -4,
+        "align": "left",
+        "dx": 4,
         "dy": -8,
         "fontSize": 11,
         "color": "#999"
       },
       "encoding": {
-        "x": { "datum": "2025-01-01", "type": "temporal" },
+        "x": { "value": 0 },
         "y": { "datum": 3.5, "type": "quantitative" },
         "text": { "value": "Pre-pandemic avg ~3.5%" }
       }
@@ -69,6 +71,6 @@
   ],
   "config": {
     "view": { "stroke": null },
-    "axis": { "grid": false, "labelFont": "sans-serif", "titleFont": "sans-serif" }
+    "axis": { "grid": false }
   }
 }

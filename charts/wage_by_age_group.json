@@ -1,0 +1,96 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Mean Monthly Wage by Age Group, Malaysia (2024)",
+    "subtitle": "Workers aged 45–54 earn the highest wages; young workers aged 15–24 earn well below average",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "anchor": "start",
+    "fontWeight": "normal",
+    "subtitleColor": "#666"
+  },
+  "width": 500,
+  "height": 320,
+  "data": {
+    "values": [
+      {"age_group": "15-19", "mean_wage": 2161, "category": "Below national mean"},
+      {"age_group": "20-24", "mean_wage": 2255, "category": "Below national mean"},
+      {"age_group": "25-29", "mean_wage": 2946, "category": "Below national mean"},
+      {"age_group": "30-34", "mean_wage": 3381, "category": "Below national mean"},
+      {"age_group": "35-39", "mean_wage": 4013, "category": "Above national mean"},
+      {"age_group": "40-44", "mean_wage": 4395, "category": "Above national mean"},
+      {"age_group": "45-49", "mean_wage": 4517, "category": "Above national mean"},
+      {"age_group": "50-54", "mean_wage": 4495, "category": "Above national mean"},
+      {"age_group": "55-59", "mean_wage": 4463, "category": "Above national mean"},
+      {"age_group": "60-64", "mean_wage": 3373, "category": "Below national mean"}
+    ]
+  },
+  "layer": [
+    {
+      "mark": { "type": "bar", "cornerRadiusEnd": 3 },
+      "encoding": {
+        "y": {
+          "field": "age_group",
+          "type": "ordinal",
+          "title": "Age Group",
+          "sort": ["15-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64"]
+        },
+        "x": {
+          "field": "mean_wage",
+          "type": "quantitative",
+          "title": "Mean Monthly Wage (RM)",
+          "axis": { "grid": true, "gridColor": "#f0f0f0", "format": ",.0f" }
+        },
+        "color": {
+          "field": "category",
+          "type": "nominal",
+          "title": "Legend",
+          "scale": {
+            "domain": ["Above national mean", "Below national mean"],
+            "range": ["#1D9E75", "#378ADD"]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "titleFontSize": 11,
+            "labelFontSize": 11
+          }
+        },
+        "tooltip": [
+          { "field": "age_group", "type": "ordinal", "title": "Age Group" },
+          { "field": "mean_wage", "type": "quantitative", "title": "Mean Wage (RM)", "format": ",.0f" },
+          { "field": "category", "type": "nominal", "title": "Category" }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#333",
+        "strokeDash": [4, 4],
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "x": { "datum": 3652, "type": "quantitative" }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 4,
+        "fontSize": 11,
+        "color": "#333",
+        "y": 10
+      },
+      "encoding": {
+        "x": { "datum": 3652, "type": "quantitative" },
+        "text": { "value": "National mean RM3,652" }
+      }
+    }
+  ],
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "grid": false }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Youth vs National Unemployment Rate (2021–2025)",
+    "subtitle": "Young Malaysians aged 15–30 face unemployment rates far above the national average",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "anchor": "start",
+    "fontWeight": "normal",
+    "subtitleColor": "#666"
+  },
+  "width": 600,
+  "height": 300,
+  "data": {
+    "url": "data/lfs_month_youth.csv"
+  },
+  "transform": [
+    { "filter": "year(datum.date) >= 2021" },
+    {
+      "fold": ["u_rate_15_30", "u_rate_15_24"],
+      "as": ["group", "rate"]
+    },
+    {
+      "calculate": "datum.group === 'u_rate_15_30' ? 'Youth (15–30)' : 'Youth (15–24)'",
+      "as": "group_label"
+    }
+  ],
+  "mark": {
+    "type": "line",
+    "strokeWidth": 2.5
+  },
+  "encoding": {
+    "x": {
+      "field": "date",
+      "type": "temporal",
+      "title": null,
+      "axis": { "format": "%b %Y", "labelAngle": -30, "tickCount": 12 }
+    },
+    "y": {
+      "field": "rate",
+      "type": "quantitative",
+      "title": "Unemployment Rate (%)",
+      "scale": { "zero": false },
+      "axis": { "grid": true, "gridColor": "#f0f0f0" }
+    },
+    "color": {
+      "field": "group_label",
+      "type": "nominal",
+      "title": "Age Group",
+      "scale": {
+        "domain": ["Youth (15–30)", "Youth (15–24)"],
+        "range": ["#D4537E", "#EF9F27"]
+      },
+      "legend": { "orient": "top-left" }
+    },
+    "tooltip": [
+      { "field": "date", "type": "temporal", "title": "Month", "format": "%B %Y" },
+      { "field": "group_label", "type": "nominal", "title": "Group" },
+      { "field": "rate", "type": "quantitative", "title": "Rate (%)", "format": ".1f" }
+    ]
+  },
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "grid": false }
+  }
+}

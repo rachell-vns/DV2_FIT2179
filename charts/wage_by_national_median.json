@@ -1,0 +1,94 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "National Median Monthly Wage, Malaysia (2021–2024)",
+    "subtitle": "Median wage has grown steadily, recovering from the COVID-19 dip in 2020",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "anchor": "start",
+    "fontWeight": "normal",
+    "subtitleColor": "#666"
+  },
+  "width": 500,
+  "height": 280,
+  "data": {
+    "values": [
+      {"year": "2021", "median_wage": 2256, "annotation": "Post-COVID recovery"},
+      {"year": "2022", "median_wage": 2429, "annotation": ""},
+      {"year": "2023", "median_wage": 2602, "annotation": ""},
+      {"year": "2024", "median_wage": 2793, "annotation": "Latest"}
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "area",
+        "line": { "color": "#378ADD", "strokeWidth": 2.5 },
+        "color": "#378ADD",
+        "opacity": 0.1
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "title": null,
+          "axis": { "labelAngle": 0 }
+        },
+        "y": {
+          "field": "median_wage",
+          "type": "quantitative",
+          "title": "Median Monthly Wage (RM)",
+          "scale": { "zero": false },
+          "axis": { "grid": true, "gridColor": "#f0f0f0", "format": ",.0f" }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 80,
+        "color": "#378ADD"
+      },
+      "encoding": {
+        "x": { "field": "year", "type": "ordinal" },
+        "y": { "field": "median_wage", "type": "quantitative" },
+        "tooltip": [
+          { "field": "year", "type": "ordinal", "title": "Year" },
+          { "field": "median_wage", "type": "quantitative", "title": "Median Wage (RM)", "format": ",.0f" }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -14,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#378ADD"
+      },
+      "encoding": {
+        "x": { "field": "year", "type": "ordinal" },
+        "y": { "field": "median_wage", "type": "quantitative" },
+        "text": { "field": "median_wage", "type": "quantitative", "format": ",.0f" }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -28,
+        "fontSize": 10,
+        "color": "#999"
+      },
+      "encoding": {
+        "x": { "field": "year", "type": "ordinal" },
+        "y": { "field": "median_wage", "type": "quantitative" },
+        "text": { "field": "annotation", "type": "nominal" }
+      }
+    }
+  ],
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "grid": false, "labelFont": "sans-serif", "titleFont": "sans-serif" }
+  }
+}

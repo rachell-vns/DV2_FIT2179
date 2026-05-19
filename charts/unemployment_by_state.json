@@ -1,0 +1,78 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Unemployment Rate by State, Malaysia (2023)",
+    "subtitle": "Some states face unemployment rates more than twice the national average of 3.2%",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "anchor": "start",
+    "fontWeight": "normal",
+    "subtitleColor": "#666"
+  },
+  "width": 500,
+  "height": 400,
+  "data": { "url": "data/lfs_state_sex.csv" },
+  "transform": [
+    { "filter": "datum.sex == 'both' && datum.date == '2023-01-01'" }
+  ],
+  "layer": [
+    {
+      "mark": { "type": "bar", "cornerRadiusEnd": 3 },
+      "encoding": {
+        "y": {
+          "field": "state",
+          "type": "nominal",
+          "title": null,
+          "sort": "-x"
+        },
+        "x": {
+          "field": "u_rate",
+          "type": "quantitative",
+          "title": "Unemployment Rate (%)",
+          "axis": { "grid": true, "gridColor": "#f0f0f0" }
+        },
+        "color": {
+          "condition": {
+            "test": "datum.u_rate > 3.5",
+            "value": "#D4537E"
+          },
+          "value": "#378ADD"
+        },
+        "tooltip": [
+          { "field": "state", "type": "nominal", "title": "State" },
+          { "field": "u_rate", "type": "quantitative", "title": "Unemployment Rate (%)", "format": ".1f" }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#333",
+        "strokeDash": [4, 4],
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "x": { "datum": 3.5, "type": "quantitative" }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 4,
+        "dy": -6,
+        "fontSize": 10,
+        "color": "#333"
+      },
+      "encoding": {
+        "x": { "datum": 3.5, "type": "quantitative" },
+        "y": { "value": 10 },
+        "text": { "value": "National avg 3.5%" }
+      }
+    }
+  ],
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "grid": false }
+  }
+}
