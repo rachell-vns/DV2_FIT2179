@@ -11,7 +11,59 @@
   "height": 420,
   "layer": [
     {
-      "data": {"url": "../data/wages_median_age.csv"},
+      "data": {
+  "values": [
+    {"age_group":"15-19","year":"2021","wage":1437},
+    {"age_group":"15-19","year":"2022","wage":1452},
+    {"age_group":"15-19","year":"2023","wage":1529},
+    {"age_group":"15-19","year":"2024","wage":1650},
+
+    {"age_group":"20-24","year":"2021","wage":1434},
+    {"age_group":"20-24","year":"2022","wage":1491},
+    {"age_group":"20-24","year":"2023","wage":1593},
+    {"age_group":"20-24","year":"2024","wage":1699},
+
+    {"age_group":"25-29","year":"2021","wage":1656},
+    {"age_group":"25-29","year":"2022","wage":1909},
+    {"age_group":"25-29","year":"2023","wage":2076},
+    {"age_group":"25-29","year":"2024","wage":2095},
+
+    {"age_group":"30-34","year":"2021","wage":2417},
+    {"age_group":"30-34","year":"2022","wage":2564},
+    {"age_group":"30-34","year":"2023","wage":2702},
+    {"age_group":"30-34","year":"2024","wage":2850},
+
+    {"age_group":"35-39","year":"2021","wage":2791},
+    {"age_group":"35-39","year":"2022","wage":2956},
+    {"age_group":"35-39","year":"2023","wage":3119},
+    {"age_group":"35-39","year":"2024","wage":3188},
+
+    {"age_group":"40-44","year":"2021","wage":3154},
+    {"age_group":"40-44","year":"2022","wage":3330},
+    {"age_group":"40-44","year":"2023","wage":3381},
+    {"age_group":"40-44","year":"2024","wage":3481},
+
+    {"age_group":"45-49","year":"2021","wage":3005},
+    {"age_group":"45-49","year":"2022","wage":3198},
+    {"age_group":"45-49","year":"2023","wage":3387},
+    {"age_group":"45-49","year":"2024","wage":3427},
+
+    {"age_group":"50-54","year":"2021","wage":3045},
+    {"age_group":"50-54","year":"2022","wage":3132},
+    {"age_group":"50-54","year":"2023","wage":3161},
+    {"age_group":"50-54","year":"2024","wage":3140},
+
+    {"age_group":"55-59","year":"2021","wage":3002},
+    {"age_group":"55-59","year":"2022","wage":2930},
+    {"age_group":"55-59","year":"2023","wage":2937},
+    {"age_group":"55-59","year":"2024","wage":3140},
+
+    {"age_group":"60-64","year":"2021","wage":2037},
+    {"age_group":"60-64","year":"2022","wage":2135},
+    {"age_group":"60-64","year":"2023","wage":2320},
+    {"age_group":"60-64","year":"2024","wage":2489}
+  ]
+},
       "mark": {"type": "bar", "tooltip": true},
       "encoding": {
         "x": {

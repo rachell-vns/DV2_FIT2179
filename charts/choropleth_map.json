@@ -1,12 +1,9 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  
   "width": "container",
   "height": 420,
   "padding": { "top": 10, "bottom": 80, "left": 10, "right": 10 },
-"config": {
-    "view": { "stroke": null }
-  },
+  "config": { "view": { "stroke": null } },
   "projection": { "type": "mercator" },
   "layer": [
     {
@@ -52,33 +49,18 @@
           "legend": null
         },
         "tooltip": [
-          { "field": "state",  "type": "nominal",      "title": "State"                        },
+          { "field": "state",  "type": "nominal",      "title": "State"                         },
           { "field": "u_rate", "type": "quantitative", "title": "Unemployment (%)", "format": ".1f" }
         ]
       }
     },
     {
       "data": {
-        "url": "../data/malaysia-states.topojson",
-        "format": { "type": "topojson", "feature": "malaysia-states" }
+        "values": [
+          { "shapeName": "Sabah",  "state": "Sabah",       "u_rate": 7.5, "lon": 117.5, "lat": 5.3  },
+          { "shapeName": "Labuan", "state": "W.P. Labuan", "u_rate": 6.8, "lon": 115.2, "lat": 5.28 }
+        ]
       },
-      "transform": [
-        {
-          "lookup": "properties.shapeName",
-          "from": {
-            "data": {
-              "values": [
-                { "shapeName": "Sabah",   "state": "Sabah",         "u_rate": 7.5 },
-                { "shapeName": "Labuan",  "state": "W.P. Labuan",   "u_rate": 6.8 }
-              ]
-            },
-            "key": "shapeName",
-            "fields": ["state", "u_rate"]
-          }
-        },
-        { "filter": "datum.u_rate != null" },
-        { "calculate": "geoCentroid(null, datum)", "as": "centroid" }
-      ],
       "mark": {
         "type": "text",
         "fontSize": 9,
@@ -89,8 +71,8 @@
         "baseline": "middle"
       },
       "encoding": {
-        "longitude": { "field": "centroid[0]", "type": "quantitative" },
-        "latitude":  { "field": "centroid[1]", "type": "quantitative" },
+        "longitude": { "field": "lon", "type": "quantitative" },
+        "latitude":  { "field": "lat", "type": "quantitative" },
         "text": { "field": "u_rate", "type": "quantitative", "format": ".1f%" }
       }
     }
