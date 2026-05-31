@@ -11,7 +11,7 @@
   "height": 420,
   "layer": [
     {
-      "data": {"url": "data/wages_median_age.csv"},
+      "data": {"url": "../data/wages_median_age.csv"},
       "mark": {"type": "bar", "tooltip": true},
       "encoding": {
         "x": {

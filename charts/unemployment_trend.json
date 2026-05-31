@@ -3,7 +3,7 @@
   "description": "Chart 2 — Annotated unemployment line with storytelling, zero baseline, phase bands",
   "width": "container",
   "height": 442,
-  "data": { "url": "data/lfs_month.csv" },
+  "data": { "url": "../data/lfs_month.csv" },
   "transform": [
     { "filter": "year(datum.date) >= 2021" }
   ],
