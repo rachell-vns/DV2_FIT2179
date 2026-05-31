@@ -1,0 +1,153 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Labour Force Growth Trend (2021–2026)",
+    "subtitle": "Monthly labour force size in thousands — key structural shifts annotated",
+    "subtitleFontStyle": "italic",
+    "subtitleFontSize": 11,
+    "anchor": "start"
+  },
+  "width": "container",
+  "height": 420,
+  "data": {
+    "url": "../data/lfs_month.csv",
+    "format": { "type": "csv" }
+  },
+  "encoding": {
+    "x": {
+      "field": "date", "type": "temporal",
+      "axis": {
+        "title": null, "format": "%Y", "tickCount": 6,
+        "labelAngle": 0, "labelFontSize": 10, "grid": false
+      }
+    },
+    "y": {
+      "field": "lf", "type": "quantitative",
+      "scale": { "domain": [15800, 17700], "zero": false },
+      "axis": {
+        "title": "Labour Force ('000 Persons)",
+        "titleFontSize": 11, "titlePadding": 12,
+        "tickCount": 5, "labelFontSize": 10, "format": ",.0f"
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": { "type": "area", "color": "#2d4a66", "opacity": 0.08, "interpolate": "monotone" },
+      "encoding": {
+        "y2": { "datum": 15800 }
+      }
+    },
+    {
+      "mark": { "type": "line", "color": "#2d4a66", "strokeWidth": 2.5, "interpolate": "monotone" },
+      "encoding": {
+        "tooltip": [
+          { "field": "date",   "type": "temporal",     "title": "Month",                  "format": "%B %Y" },
+          { "field": "lf",     "type": "quantitative", "title": "Labour Force ('000)",     "format": ",.1f"  },
+          { "field": "p_rate", "type": "quantitative", "title": "Participation Rate (%)",  "format": ".1f"   },
+          { "field": "u_rate", "type": "quantitative", "title": "Unemployment Rate (%)",   "format": ".1f"   }
+        ]
+      }
+    },
+
+    { "data": { "values": [{ "date": "2021-01-01", "y1": 16019.8, "y2": 16350 }] },
+      "mark": { "type": "rule", "color": "#e8533a", "strokeWidth": 1, "strokeDash": [3, 3] },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "y1", "type": "quantitative", "scale": { "domain": [15800, 17700], "zero": false } },
+        "y2": { "field": "y2" }
+      }
+    },
+    { "mark": { "type": "point", "filled": true, "size": 80, "color": "#e8533a" },
+      "transform": [{ "filter": "datum.date === '2021-01-01'" }]
+    },
+    { "data": { "values": [{ "date": "2021-01-01", "lf": 16350 }] },
+      "mark": { "type": "text", "font": "DM Mono", "fontSize": 10, "fontWeight": 600, "color": "#e8533a", "align": "left", "dx": 6 },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "lf", "type": "quantitative", "scale": { "domain": [15800, 17700], "zero": false } },
+        "text": { "value": "① Jan 2021 · 16.0M workers" }
+      }
+    },
+
+    { "data": { "values": [{ "date": "2021-06-01", "y1": 16066.2, "y2": 15880 }] },
+      "mark": { "type": "rule", "color": "#e8533a", "strokeWidth": 1, "strokeDash": [3, 3] },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "y1", "type": "quantitative", "scale": { "domain": [15800, 17700], "zero": false } },
+        "y2": { "field": "y2" }
+      }
+    },
+    { "mark": { "type": "point", "filled": true, "size": 80, "color": "#e8533a", "opacity": 0.8 },
+      "transform": [{ "filter": "datum.date === '2021-06-01'" }]
+    },
+    { "data": { "values": [{ "date": "2021-06-01", "lf": 15880 }] },
+      "mark": { "type": "text", "font": "DM Sans", "fontSize": 10, "fontWeight": 600, "color": "#e8533a", "align": "left", "dx": 6 },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "lf", "type": "quantitative", "scale": { "domain": [15800, 17700], "zero": false } },
+        "text": { "value": "② Jun 2021 · lockdown pulled 33K out" }
+      }
+    },
+
+    { "data": { "values": [{ "date": "2023-11-01", "y1": 17000.4, "y2": 17600 }] },
+      "mark": { "type": "rule", "color": "#e9c46a", "strokeWidth": 1, "strokeDash": [3, 3] },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "y1", "type": "quantitative", "scale": { "domain": [15800, 17700], "zero": false } },
+        "y2": { "field": "y2" }
+      }
+    },
+    { "mark": { "type": "point", "filled": true, "size": 80, "color": "#e9c46a", "opacity": 0.9 },
+      "transform": [{ "filter": "datum.date === '2023-11-01'" }]
+    },
+    { "data": { "values": [{ "date": "2023-11-01", "lf": 17600 }] },
+      "mark": { "type": "text", "font": "DM Sans", "fontSize": 10, "fontWeight": 600, "color": "#e9c46a", "align": "right", "dx": -6 },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "lf", "type": "quantitative", "scale": { "domain": [15800, 17700], "zero": false } },
+        "text": { "value": "③ Nov 2023 · 17M for the first time" }
+      }
+    },
+
+    { "data": { "values": [{ "date": "2024-01-01", "y1": 16789.3, "y2": 15880 }] },
+      "mark": { "type": "rule", "color": "#aaaaaa", "strokeWidth": 1, "strokeDash": [3, 3] },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "y1", "type": "quantitative", "scale": { "domain": [15800, 17700], "zero": false } },
+        "y2": { "field": "y2" }
+      }
+    },
+    { "mark": { "type": "point", "filled": true, "size": 80, "color": "#aaaaaa", "opacity": 0.9 },
+      "transform": [{ "filter": "datum.date === '2024-01-01'" }]
+    },
+    { "data": { "values": [{ "date": "2024-01-01", "lf": 15880 }] },
+      "mark": { "type": "text", "font": "DM Sans", "fontSize": 10, "fontWeight": 600, "color": "#aaaaaa", "align": "left", "dx": 6 },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "lf", "type": "quantitative", "scale": { "domain": [15800, 17700], "zero": false } },
+        "text": { "value": "④ Jan 2024 · population recount" }
+      }
+    },
+
+    { "data": { "values": [{ "date": "2026-03-01", "y1": 17313.0, "y2": 17650 }] },
+      "mark": { "type": "rule", "color": "#2a9d8f", "strokeWidth": 1, "strokeDash": [3, 3] },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "y1", "type": "quantitative", "scale": { "domain": [15800, 17700], "zero": false } },
+        "y2": { "field": "y2" }
+      }
+    },
+    { "mark": { "type": "point", "filled": true, "size": 80, "color": "#2a9d8f" },
+      "transform": [{ "filter": "datum.date === '2026-03-01'" }]
+    },
+    { "data": { "values": [{ "date": "2026-03-01", "lf": 17650 }] },
+      "mark": { "type": "text", "font": "DM Mono", "fontSize": 10, "fontWeight": 600, "color": "#2a9d8f", "align": "right", "dx": -6 },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "lf", "type": "quantitative", "scale": { "domain": [15800, 17700], "zero": false } },
+        "text": { "value": "⑤ Mar 2026 · 17.3M workers" }
+      }
+    }
+  ]
+}

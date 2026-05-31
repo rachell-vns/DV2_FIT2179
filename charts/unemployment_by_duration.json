@@ -1,0 +1,75 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Unemployment is Getting Shorter — But More Are Giving Up",
+    "subtitle": "Long-term unemployment (6mo+) fell from 20% to 12% of jobseekers, while discouraged workers grew to 1 in 5",
+    "subtitleFontStyle": "italic",
+    "subtitleFontSize": 11,
+    "anchor": "start"
+  },
+  "width": "container",
+  "height": 420,
+  "data": {
+    "url": "../data/lfs_month_duration.csv",
+    "format": { "type": "csv" }
+  },
+  "transform": [
+    { "filter": "year(datum.date) < 2026" },
+    {
+      "fold": [
+        "unemployed_active_3mo",
+        "unemployed_active_6mo",
+        "unemployed_active_12mo",
+        "unemployed_active_long",
+        "unemployed_inactive"
+      ],
+      "as": ["bucket_key", "count"]
+    },
+    {
+      "calculate": "datum.bucket_key === 'unemployed_active_3mo' ? '< 3 months' : datum.bucket_key === 'unemployed_active_6mo' ? '3–6 months' : datum.bucket_key === 'unemployed_active_12mo' ? '6–12 months' : datum.bucket_key === 'unemployed_active_long' ? '> 12 months' : 'Discouraged (inactive)'",
+      "as": "Duration"
+    }
+  ],
+  "mark": { "type": "area", "interpolate": "monotone" },
+  "encoding": {
+    "x": {
+      "field": "date", "type": "temporal",
+      "axis": {
+        "title": null, "format": "%Y", "tickCount": 5,
+        "labelAngle": 0, "labelFontSize": 10, "grid": false
+      }
+    },
+    "y": {
+      "field": "count", "type": "quantitative",
+      "stack": "normalize",
+      "axis": {
+        "title": "Share of Unemployed",
+        "format": ".0%", "tickCount": 5, "labelFontSize": 10
+      }
+    },
+    "color": {
+      "field": "Duration", "type": "nominal",
+      "scale": {
+        "domain": ["< 3 months", "3–6 months", "6–12 months", "> 12 months", "Discouraged (inactive)"],
+        "range": ["#2d4a66", "#2a9d8f", "#e9c46a", "#e8533a", "#aaaaaa"]
+      },
+      "legend": {
+        "title": "Duration",
+        "orient": "bottom",
+        "direction": "horizontal",
+        "labelFontSize": 10,
+        "columns": 3,
+        "labelLimit": 160
+      }
+    },
+    "order": {
+      "field": "Duration",
+      "sort": ["< 3 months", "3–6 months", "6–12 months", "> 12 months", "Discouraged (inactive)"]
+    },
+    "tooltip": [
+      { "field": "date",     "type": "temporal",     "title": "Month",    "format": "%B %Y" },
+      { "field": "Duration", "type": "nominal",       "title": "Duration"                   },
+      { "field": "count",    "type": "quantitative",  "title": "('000)",   "format": ".1f"   }
+    ]
+  }
+}

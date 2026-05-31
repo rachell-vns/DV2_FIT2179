@@ -1,0 +1,98 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  
+  "width": "container",
+  "height": 420,
+  "padding": { "top": 10, "bottom": 80, "left": 10, "right": 10 },
+"config": {
+    "view": { "stroke": null }
+  },
+  "projection": { "type": "mercator" },
+  "layer": [
+    {
+      "data": {
+        "url": "../data/malaysia-states.topojson",
+        "format": { "type": "topojson", "feature": "malaysia-states" }
+      },
+      "transform": [
+        {
+          "lookup": "properties.shapeName",
+          "from": {
+            "data": {
+              "values": [
+                { "shapeName": "Johor",           "state": "Johor",             "u_rate": 2.6 },
+                { "shapeName": "Kedah",           "state": "Kedah",             "u_rate": 2.9 },
+                { "shapeName": "Kelantan",        "state": "Kelantan",          "u_rate": 3.5 },
+                { "shapeName": "Malacca",         "state": "Melaka",            "u_rate": 1.6 },
+                { "shapeName": "Negeri Sembilan", "state": "Negeri Sembilan",   "u_rate": 3.2 },
+                { "shapeName": "Pahang",          "state": "Pahang",            "u_rate": 2.0 },
+                { "shapeName": "Perak",           "state": "Perak",             "u_rate": 3.9 },
+                { "shapeName": "Perlis",          "state": "Perlis",            "u_rate": 4.4 },
+                { "shapeName": "Penang",          "state": "Pulau Pinang",      "u_rate": 2.2 },
+                { "shapeName": "Sabah",           "state": "Sabah",             "u_rate": 7.5 },
+                { "shapeName": "Sarawak",         "state": "Sarawak",           "u_rate": 3.4 },
+                { "shapeName": "Selangor",        "state": "Selangor",          "u_rate": 2.7 },
+                { "shapeName": "Terengganu",      "state": "Terengganu",        "u_rate": 3.4 },
+                { "shapeName": "Kuala Lumpur",    "state": "W.P. Kuala Lumpur", "u_rate": 3.0 },
+                { "shapeName": "Labuan",          "state": "W.P. Labuan",       "u_rate": 6.8 },
+                { "shapeName": "Putrajaya",       "state": "W.P. Putrajaya",    "u_rate": 0.8 }
+              ]
+            },
+            "key": "shapeName",
+            "fields": ["state", "u_rate"]
+          }
+        }
+      ],
+      "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 0.8 },
+      "encoding": {
+        "color": {
+          "field": "u_rate",
+          "type": "quantitative",
+          "scale": { "domain": [0.5, 8], "scheme": "orangered" },
+          "legend": null
+        },
+        "tooltip": [
+          { "field": "state",  "type": "nominal",      "title": "State"                        },
+          { "field": "u_rate", "type": "quantitative", "title": "Unemployment (%)", "format": ".1f" }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "../data/malaysia-states.topojson",
+        "format": { "type": "topojson", "feature": "malaysia-states" }
+      },
+      "transform": [
+        {
+          "lookup": "properties.shapeName",
+          "from": {
+            "data": {
+              "values": [
+                { "shapeName": "Sabah",   "state": "Sabah",         "u_rate": 7.5 },
+                { "shapeName": "Labuan",  "state": "W.P. Labuan",   "u_rate": 6.8 }
+              ]
+            },
+            "key": "shapeName",
+            "fields": ["state", "u_rate"]
+          }
+        },
+        { "filter": "datum.u_rate != null" },
+        { "calculate": "geoCentroid(null, datum)", "as": "centroid" }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 9,
+        "font": "DM Mono",
+        "fontWeight": 600,
+        "color": "#ffffff",
+        "align": "center",
+        "baseline": "middle"
+      },
+      "encoding": {
+        "longitude": { "field": "centroid[0]", "type": "quantitative" },
+        "latitude":  { "field": "centroid[1]", "type": "quantitative" },
+        "text": { "field": "u_rate", "type": "quantitative", "format": ".1f%" }
+      }
+    }
+  ]
+}

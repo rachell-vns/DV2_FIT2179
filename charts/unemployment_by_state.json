@@ -2,18 +2,22 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Unemployment Rate by State, Malaysia (2023)",
-    "subtitle": "Some states face unemployment rates more than twice the national average of 3.2%",
+    "subtitle": "Some states face unemployment rates more than twice the national average of 3.5%",
     "fontSize": 16,
     "subtitleFontSize": 12,
     "anchor": "start",
     "fontWeight": "normal",
     "subtitleColor": "#666"
   },
-  "width": 500,
-  "height": 400,
+  "width": "container",
+  "height": 420,
   "data": { "url": "data/lfs_state_sex.csv" },
   "transform": [
-    { "filter": "datum.sex == 'both' && datum.date == '2023-01-01'" }
+    { "filter": "datum.sex == 'both' && datum.date == '2023-01-01'" },
+    {
+      "calculate": "datum.u_rate > 3.5 ? 'Above national average' : 'Below national average'",
+      "as": "rate_category"
+    }
   ],
   "layer": [
     {
@@ -23,56 +27,75 @@
           "field": "state",
           "type": "nominal",
           "title": null,
-          "sort": "-x"
+          "sort": "-x",
+          "axis": { "labelFontSize": 12 }
         },
         "x": {
           "field": "u_rate",
           "type": "quantitative",
           "title": "Unemployment Rate (%)",
+          "scale": { "domainMax": 9 },
           "axis": { "grid": true, "gridColor": "#f0f0f0" }
         },
         "color": {
-          "condition": {
-            "test": "datum.u_rate > 3.5",
-            "value": "#D4537E"
+          "field": "rate_category",
+          "type": "nominal",
+          "title": null,
+          "scale": {
+            "domain": ["Above national average", "Below national average"],
+            "range": ["#C0392B", "#1A5276"]
           },
-          "value": "#378ADD"
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "labelFontSize": 12,
+            "symbolSize": 160,
+            "symbolType": "square"
+          }
         },
         "tooltip": [
-          { "field": "state", "type": "nominal", "title": "State" },
-          { "field": "u_rate", "type": "quantitative", "title": "Unemployment Rate (%)", "format": ".1f" }
+          { "field": "state",  "type": "nominal",      "title": "State" },
+          { "field": "u_rate", "type": "quantitative",  "title": "Unemployment Rate (%)", "format": ".1f" }
         ]
       }
     },
+
     {
-      "mark": {
-        "type": "rule",
-        "color": "#333",
-        "strokeDash": [4, 4],
-        "strokeWidth": 1.5
-      },
+      "mark": { "type": "text", "align": "left", "dx": 6, "fontSize": 11, "fontWeight": "500", "color": "#444" },
+      "encoding": {
+        "y": { "field": "state", "type": "nominal", "sort": "-x" },
+        "x": { "field": "u_rate", "type": "quantitative" },
+        "text": { "field": "u_rate", "type": "quantitative", "format": ".1f" }
+      }
+    },
+
+    {
+      "mark": { "type": "rule", "color": "#C0392B", "strokeDash": [5, 4], "strokeWidth": 2 },
       "encoding": {
         "x": { "datum": 3.5, "type": "quantitative" }
       }
     },
+
     {
       "mark": {
         "type": "text",
         "align": "left",
-        "dx": 4,
-        "dy": -6,
-        "fontSize": 10,
-        "color": "#333"
+        "dx": 6,
+        "dy": 0,
+        "fontSize": 11,
+        "fontWeight": "600",
+        "color": "#C0392B"
       },
       "encoding": {
         "x": { "datum": 3.5, "type": "quantitative" },
-        "y": { "value": 10 },
-        "text": { "value": "National avg 3.5%" }
+        "y": { "value": 8 },
+        "text": { "value": "National avg: 3.5%" }
       }
     }
   ],
   "config": {
     "view": { "stroke": null },
-    "axis": { "grid": false }
+    "axis": { "grid": false },
+    "font": "DM Sans, sans-serif"
   }
 }

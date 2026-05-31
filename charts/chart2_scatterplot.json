@@ -1,0 +1,95 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 420,
+  "data": {
+    "values": [
+      { "state": "Johor",             "u_rate": 2.6, "p_rate": 71.3 },
+      { "state": "Kedah",             "u_rate": 2.9, "p_rate": 65.3 },
+      { "state": "Kelantan",          "u_rate": 3.5, "p_rate": 57.3 },
+      { "state": "Melaka",            "u_rate": 1.6, "p_rate": 70.1 },
+      { "state": "Negeri Sembilan",   "u_rate": 3.2, "p_rate": 66.1 },
+      { "state": "Pahang",            "u_rate": 2.0, "p_rate": 65.1 },
+      { "state": "Perak",             "u_rate": 3.9, "p_rate": 66.0 },
+      { "state": "Perlis",            "u_rate": 4.4, "p_rate": 61.7 },
+      { "state": "Pulau Pinang",      "u_rate": 2.2, "p_rate": 71.3 },
+      { "state": "Sabah",             "u_rate": 7.5, "p_rate": 70.1 },
+      { "state": "Sarawak",           "u_rate": 3.4, "p_rate": 69.0 },
+      { "state": "Selangor",          "u_rate": 2.7, "p_rate": 77.4 },
+      { "state": "Terengganu",        "u_rate": 3.4, "p_rate": 60.0 },
+      { "state": "W.P. Kuala Lumpur", "u_rate": 3.0, "p_rate": 74.2 },
+      { "state": "W.P. Labuan",       "u_rate": 6.8, "p_rate": 67.9 },
+      { "state": "W.P. Putrajaya",    "u_rate": 0.8, "p_rate": 78.6 }
+    ]
+  },
+  "layer": [
+    {
+      "mark": { "type": "point", "filled": true, "size": 100, "tooltip": true },
+      "encoding": {
+        "x": {
+          "field": "p_rate",
+          "type": "quantitative",
+          "scale": { "domain": [54, 82] },
+          "axis": {
+            "title": "Labour Force Participation Rate (%)",
+            "titleFontSize": 11,
+            "labelFontSize": 10,
+            "grid": true,
+            "gridOpacity": 0.4
+          }
+        },
+        "y": {
+          "field": "u_rate",
+          "type": "quantitative",
+          "scale": { "domain": [0, 9] },
+          "axis": {
+            "title": "Unemployment Rate (%)",
+            "titleFontSize": 11,
+            "labelFontSize": 10,
+            "grid": true,
+            "gridOpacity": 0.4
+          }
+        },
+        "color": {
+          "field": "u_rate",
+          "type": "quantitative",
+          "scale": { "domain": [0.5, 8], "range": ["#2a9d8f", "#c9a84c", "#e8533a"] },
+          "legend": {
+            "title": "Unemployment Rate (%)",
+            "orient": "top-left",
+            "direction": "horizontal",
+            "gradientLength": 120,
+            "titleFontSize": 10,
+            "labelFontSize": 10,
+            "offset": 8
+          }
+        },
+        "tooltip": [
+          { "field": "state",  "type": "nominal",     "title": "State" },
+          { "field": "p_rate", "type": "quantitative", "title": "Participation Rate (%)", "format": ".1f" },
+          { "field": "u_rate", "type": "quantitative", "title": "Unemployment Rate (%)",  "format": ".1f" }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 9,
+        "font": "DM Mono",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 8
+      },
+      "encoding": {
+        "x": { "field": "p_rate", "type": "quantitative" },
+        "y": { "field": "u_rate", "type": "quantitative" },
+        "text": { "field": "state", "type": "nominal" },
+        "color": {
+          "field": "u_rate",
+          "type": "quantitative",
+          "scale": { "domain": [0.5, 8], "range": ["#2a9d8f", "#c9a84c", "#e8533a"] }
+        }
+      }
+    }
+  ]
+}

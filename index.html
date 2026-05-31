@@ -3,70 +3,787 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Who's Working, Who's Struggling — Malaysia's Labour Market</title>
+  <title>Who's Working, Who's Struggling — Malaysia's Labour Market Divide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
   <style>
-    body { font-family: sans-serif; padding: 2rem; background: #f9f9f9; }
-    h1 { margin-bottom: 2rem; }
-    .chart-container {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      width: 100%;
-    }
-    .chart-title {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #333;
-    }
+
+:root {
+  --navy:       #0d1b2a;
+  --navy-mid:   #1a2f45;
+  --navy-light: #2d4a66;
+  --cream:      #f5f0e8;
+  --cream-dark: #ede6d5;
+  --coral:      #e8533a;
+  --coral-light:#f07a65;
+  --gold:       #c9a84c;
+  --teal:       #2a9d8f;
+  --teal-light: #52b5a8;
+  --text-dark:  #1a1a2e;
+  --text-mid:   #3d3d5c;
+  --text-light: #7a7a9a;
+  --white:      #ffffff;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'DM Mono', monospace;
+
+  --max-width: 1280px;
+  --section-gap: 5rem;
+  --card-radius: 4px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--text-dark);
+  line-height: 1.65;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+/* ── CONTAINER ── */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--navy);
+  color: var(--cream);
+  padding: 7rem 2.5rem 5rem;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 80%, rgba(232,83,58,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(42,157,143,0.1) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: 'LABOUR';
+  position: absolute;
+  bottom: -2rem;
+  right: -1rem;
+  font-family: var(--font-display);
+  font-size: 18rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.02);
+  line-height: 1;
+  pointer-events: none;
+  letter-spacing: -0.05em;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--coral-light);
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--coral-light);
+}
+
+.hero-sub {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.hero-desc {
+  max-width: 640px;
+  margin: 0 auto 3rem;
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: rgba(245,240,232,0.8);
+  line-height: 1.75;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+  position: relative;
+}
+
+.stat-pill {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 2px;
+  padding: 1.1rem 1.6rem;
+  text-align: center;
+  min-width: 160px;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s;
+}
+
+.stat-pill:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.stat-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--coral-light);
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(245,240,232,0.55);
+}
+
+.scroll-hint {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: rgba(245,240,232,0.35);
+  animation: bounce 2.4s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
+}
+
+/* ── DOMAIN SECTION ── */
+.domain-section {
+  background: var(--navy-mid);
+  padding: 3.5rem 0;
+  border-top: 3px solid var(--coral);
+}
+
+.domain-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 900px) {
+  .domain-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.domain-block {
+  padding: 0;
+}
+
+.domain-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--coral);
+  margin-bottom: 0.6rem;
+  border-left: 2px solid var(--coral);
+  padding-left: 0.6rem;
+}
+
+.domain-block p {
+  font-size: 0.88rem;
+  color: rgba(245,240,232,0.72);
+  line-height: 1.65;
+}
+
+/* ── SECTIONS ── */
+.section {
+  padding: var(--section-gap) 0;
+  background: var(--cream);
+}
+
+#section1 {
+  padding-bottom: 2rem;
+}
+
+.section-alt {
+  background: var(--cream-dark);
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 5rem;
+  font-weight: 900;
+  color: rgba(0,0,0,0.06);
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: -0.5rem;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+
+.section-intro {
+  font-size: 1rem;
+  color: var(--text-mid);
+  max-width: 680px;
+  line-height: 1.7;
+}
+
+.chart-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.chart-row.two-col {
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 960px) {
+  .chart-row.two-col { flex-direction: column; }
+}
+
+.chart-card {
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,0.07);
+  border-radius: var(--card-radius);
+  padding: 1.5rem;
+  flex: 1;
+  min-width: 0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.06);
+  transition: box-shadow 0.2s;
+}
+
+.chart-card:hover {
+  box-shadow: 0 6px 24px rgba(0,0,0,0.09), 0 2px 6px rgba(0,0,0,0.07);
+}
+
+.chart-card.wide { flex: 1.6; }
+.chart-card.full-width { width: 100%; flex: none; }
+
+
+.chart-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed rgba(0,0,0,0.1);
+}
+
+.chart-row.two-col {
+  align-items: stretch;
+}
+
+/* ── ANNOTATIONS ── */
+.annotation-box {
+  background: linear-gradient(135deg, rgba(13,27,42,0.04), rgba(232,83,58,0.05));
+  border-left: 3px solid var(--coral);
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 1rem;
+  font-size: 0.82rem;
+  color: var(--text-mid);
+  line-height: 1.55;
+  border-radius: 0 2px 2px 0;
+}
+
+.ann-icon {
+  font-weight: 700;
+  color: var(--coral);
+  margin-right: 0.3rem;
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  background: var(--navy);
+  color: rgba(245,240,232,0.7);
+  padding: 4rem 0 2rem;
+  border-top: 3px solid var(--coral);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1.2fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 800px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+.footer-head {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--coral-light);
+  margin-bottom: 0.8rem;
+}
+
+.footer-block p {
+  font-size: 0.83rem;
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+}
+
+.footer-meta {
+  font-family: var(--font-mono);
+  font-size: 0.7rem !important;
+  color: rgba(245,240,232,0.4) !important;
+  margin-top: 0.8rem !important;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 1.5rem;
+  text-align: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: rgba(245,240,232,0.3);
+}
+
+.vega-embed {
+  width: 100%;
+}
+
+.chart-row.two-col .chart-card {
+  align-self: flex-start;
+}
+
   </style>
 </head>
 <body>
 
-  <h1>Who's Working, Who's Struggling — Malaysia's Labour Market (2021–2025)</h1>
-
-  <!-- Chart 2 -->
-  <div class="chart-container">
-    <div class="chart-title">Unemployment Rate Trend</div>
-    <div id="chart2"></div>
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-eyebrow">MALAYSIA LABOUR MARKET ANALYSIS · 2021-2026</div>
+  <h1 class="hero-title">
+    Who's Working,<br/>
+    <em>Who's Struggling</em>
+  </h1>
+  <p class="hero-sub">Malaysia's Labour Market Divide</p>
+  <div class="hero-desc">
+    Young Malaysians face record unemployment. Graduates take jobs below their qualifications.
+    Gig work is surging. And wages vary wildly by sector and state — a widening gap that data reveals in stark detail.
   </div>
-
-  <!-- Chart 5 -->
-  <div class="chart-container">
-    <div class="chart-title">Youth vs National Unemployment</div>
-    <div id="chart5"></div>
+  <div class="hero-stats">
+    <div class="stat-pill">
+      <span class="stat-num">10.1%</span>
+      <span class="stat-label">Youth unemployment rate (Nov 2025)</span>
+    </div>
+    <div class="stat-pill">
+      <span class="stat-num">35.5%</span>
+      <span class="stat-label">Graduates in low/semi-skill jobs (Q3 2025)</span>
+    </div>
+    <div class="stat-pill">
+      <span class="stat-num">RM 3,167</span>
+      <span class="stat-label">Median monthly wage (Dec 2025)</span>
+    </div>
+    <div class="stat-pill">
+      <span class="stat-num">3.26M</span>
+      <span class="stat-label">Own-account / gig workers (Nov 2025)</span>
+    </div>
+</div>
   </div>
+  <div class="scroll-hint">↓ Scroll to explore</div>
+</header>
 
-  <!-- Chart 8 -->
-  <div class="chart-container">
-    <div class="chart-title">Unemployment Rate by State</div>
-    <div id="chart8"></div>
+<!-- DOMAIN DESCRIPTION -->
+<section class="domain-section">
+  <div class="container">
+    <div class="domain-grid">
+      <div class="domain-block">
+        <div class="domain-label">WHO</div>
+        <p>Working-age Malaysians (15–64), with a focus on youth (15–24), women, gig workers, and low-wage earners across 16 states.</p>
+      </div>
+      <div class="domain-block">
+        <div class="domain-label">WHAT</div>
+        <p>Labour force participation, unemployment rates, employment status, wage levels, and sectoral distribution from 2021–2026.</p>
+      </div>
+      <div class="domain-block">
+        <div class="domain-label">WHY</div>
+        <p>To reveal structural inequalities — who gets left behind, where the decent jobs are, and whether economic growth is reaching ordinary workers.</p>
+      </div>
+      <div class="domain-block">
+        <div class="domain-label">HOW</div>
+        <p>Using Department of Statistics Malaysia (DOSM) Labour Force Survey microdata, visualised through 13 custom charts and an interactive choropleth map.</p>
+      </div>
+    </div>
   </div>
+</section>
 
-  <!-- Chart 12 -->
-  <div class="chart-container">
-    <div class="chart-title">Mean Wage by Age Group (2024)</div>
-    <div id="chart12"></div>
+<!-- SECTION 1 -->
+<section class="section" id="section1">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div>
+        <h2 class="section-title">The Participation Picture</h2>
+        <p class="section-intro">Malaysia's labour force has broadly recovered post-pandemic, but beneath the headline numbers, participation gaps by gender and age persist — revealing who the economy is actually working for.</p>
+      </div>
+    </div>
+
+    <div class="chart-row two-col">
+      <div class="chart-card">
+        <div class="chart-label">Chart 1 — Malaysia's Growing Labour Force, 2021-2026</div>
+          <div class="annotation-box">
+            <span class="ann-icon">↗</span>
+            Malaysia's labour force grew by 1.3 million people over five years — from 16.0M in early 2021 to 17.3M by March 2026 —
+             June 2021 lockdown briefly pulled 33,000 workers out of the market, 
+             and a sharp paper drop in January 2024 was simply a government population recount, not real job losses. 
+      
+          </div>
+        <div id="chart1"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-label">Chart 2 — Labour Market Position by State</div>
+          <div class="annotation-box">
+            <span class="ann-icon">⊙</span>
+            Each dot is a state. <strong>Right = more people working</strong>,
+            <strong>up = harder to find a job</strong>. The best position is bottom-right —
+            high participation, low unemployment. <strong>W.P. Putrajaya</strong> sits there
+            alone (78.6%, 0.8%). <strong>Sabah</strong> is the outlier top-right — people
+            are actively looking but still can't find work (70.1%, 7.5%).
+            <strong>Kelantan</strong> bottom-left signals many have stopped looking altogether (57.3%).
+          </div>
+        <div id="chart6"></div>
+      </div>
+    </div>
+</section>
+
+<!-- SECTION 2 -->
+<section class="section section-alt" id="section2">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div>
+        <h2 class="section-title">The Unemployment Divide</h2>
+        <p class="section-intro">Malaysia's overall unemployment may look modest at 3.4%, but youth unemployment runs more than three times higher — and for those who lose work, re-entry can take months.</p>
+      </div>
+    </div>
+
+    <div class="chart-row two-col">
+      <div class="chart-card">
+        <div class="chart-label">Chart 3 — Unemployment Rate Trend</div>
+        <div class="annotation-box">
+          falling from 4.9% in January 2021 down to 3.1% by December 2024. The recovery moved in three distinct phases: a slow grind downward through early 2022, a rapid decline once borders reopened mid-2022, 
+          and then a new stable range that has held ever since.
+        </div>
+        <div id="chart2"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-label">Chart 4 — Youth vs National Unemployment</div>
+        <div class="annotation-box">
+          Youth unemployment has stayed roughly twice the national rate throughout 2021–2025 — falling from 9.3% to 6.2% for young people, while the national rate dropped from 4.9% to 2.9%. Both lines trend down together, but the gap never closes. This is a structural divide, not a pandemic hangover.
+        </div>
+        <div id="chart5"></div>
+      </div>
+    </div>
+
+    <div class="chart-row two-col">
+      <div class="chart-card">
+        <div class="chart-label">Chart 5 — Duration of Unemployment</div>
+        <div class="annotation-box">
+          <span class="ann-icon">⟳</span> Over <strong>40% of unemployed</strong> remain jobless for 3+ months, rising to 6+ months for graduates — a signal of skills mismatch, not laziness.
+        </div>
+        <div id="chart7"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-label">Chart 6 — Unemployment Rate by Age Group</div>
+        <div class="annotation-box">
+          The 15–19 and 20–24 age groups posted the strongest gains (up ~47% and ~37% respectively from 2021–2024), largely driven by minimum wage hikes. Yet the absolute gap remains stark: a 20–24 year old earning RM 2,255 still makes less than half of what a 45–49 year old takes home at RM 4,517.
+        </div>
+        <div id="chart8"></div>
+      </div>
+    </div>
+
+    <!-- Choropleth Map -->
+    <div class="chart-row">
+      <div class="chart-card full-width">
+        <div class="chart-label">Chart 7 — Choropleth Map: Unemployment Rate by State</div>
+        <div class="annotation-box">
+          <span class="ann-icon">🗺</span> The spatial divide is clear: <strong>peninsular west coast</strong> states enjoy near-full employment, while East Malaysia and the interior north struggle. Click or hover states to explore.
+        </div>
+        <div id="chart9"></div>
+    <div style="
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-mid);
+    ">
+  <span>0.5%</span>
+  <div style="
+    width: 200px;
+    height: 10px;
+    border-radius: 2px;
+    background: linear-gradient(to right,
+      #fff7ec 0%,
+      #fee8c8 12.5%,
+      #fdd49e 25%,
+      #fdbb84 37.5%,
+      #fc8d59 50%,
+      #ef6548 62.5%,
+      #d7301f 75%,
+      #b30000 87.5%,
+      #7f0000 100%
+    );
+  "></div>
+  <span>8.0%</span>
+  <span style="margin-left: 8px; color: var(--text-light);">Unemployment Rate (%)</span>
+</div>
+</div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <!-- Chart 13 -->
-  <div class="chart-container">
-    <div class="chart-title">National Median Wage Trend</div>
-    <div id="chart13"></div>
+<!-- SECTION 3 -->
+<section class="section" id="section3">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div>
+        <h2 class="section-title">How Malaysians Work</h2>
+        <p class="section-intro">The nature of employment is shifting. Formal employment grows, but so does the army of own-account workers and unpaid family helpers — a precarious informal economy running alongside the formal one.</p>
+      </div>
+    </div>
+
+    <div class="chart-row two-col">
+      <div class="chart-card wide">
+        <div class="chart-label">Chart 8 — Employment by Sector</div>
+        <div class="annotation-box">
+          <span class="ann-icon">⊛</span> <strong>Services dominate</strong> at 62% of total employment. Agriculture continues to shrink but remains the backbone of rural East Malaysia.
+        </div>
+        <div id="chart3"></div>
+      </div>
+    </div>
+    <div class="chart-card">
+        <div class="chart-label">Chart 9 — Employment by Status</div>
+        <div class="annotation-box">
+          The share of employees (salaried workers) has been gradually declining, while own-account workers are on the rise — a quiet but meaningful structural shift in how Malaysians earn a living. Employers and unpaid family workers remain relatively flat. The trend suggests more Malaysians are moving into informal or self-directed work, whether by choice or necessity, rather than taking up conventional wage employment.
+        </div>
+        <div id="chart4"></div>
+      </div>
   </div>
+</section>
 
-  <script>
-    vegaEmbed('#chart2',  'charts/unemployment_trend.json',            { actions: false });
-    vegaEmbed('#chart5',  'charts/youth_vs_national_unemployment.json', { actions: false });
-    vegaEmbed('#chart8',  'charts/unemployment_by_state.json',          { actions: false });
-    vegaEmbed('#chart12', 'charts/wage_by_age_group.json',              { actions: false });
-    vegaEmbed('#chart13', 'charts/wage_by_national_median.json',          { actions: false });
-  </script>
+<!-- SECTION 4 -->
+<section class="section section-alt" id="section4">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div>
+        <h2 class="section-title">The Wage Gap</h2>
+        <p class="section-intro">Wages are rising — but not equally. The gap between high-skill sectors like finance and low-wage sectors like agriculture is widening. And for many workers, wages still fall below a living wage.</p>
+      </div>
+    </div>
 
+    <div class="chart-row two-col">
+      <div class="chart-card wide">
+        <div class="chart-label">Chart 10 — Median Wage by Sector Over Time</div>
+        <div class="annotation-box">
+          **Minimum wage hikes are lifting the floor — but the youngest workers are barely clearing it.** The 15–19 age group's median wage sat below the minimum wage threshold in earlier years, highlighted in red, only catching up as the floor rose. Workers aged 25 and above consistently earn well above the minimum, with wages peaking in the 40–54 range. The chart tells two stories at once: older workers enjoy a comfortable buffer above the legal minimum, while teenagers and young adults are essentially minimum wage workers with little room above the threshold.
+        <div id="chart10"></div>
+      </div>
+    </div>
+
+    
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-block">
+        <div class="footer-head">Data Sources</div>
+        <p>Department of Statistics Malaysia (DOSM) — Labour Force Survey (LFS) 2019–2024. Employment Statistics, Wages & Salaries Statistics. data.gov.my open data portal.</p>
+      </div>
+      <div class="footer-block">
+        <div class="footer-head">Methodology</div>
+        <p>Monthly LFS microdata aggregated by sex, state, age group, employment status, and occupation. Wages deflated to 2020 constant prices using CPI.</p>
+      </div>
+      <div class="footer-block">
+        <div class="footer-head">About</div>
+        <p>Produced for academic visualisation coursework. All charts built with Vega-Lite v5. Map geometry: DOSM administrative boundaries.</p>
+        <p class="footer-meta">Author: Rachell Vannessa Christian· Date: 31 May 2026 · Version 1.0</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>"The labour market is not just an economic phenomenon — it is a mirror of society."</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+
+const NAVY        = '#0d1b2a';
+const NAVY_MID    = '#1a2f45';
+const NAVY_LIGHT  = '#2d4a66';
+const CREAM       = '#f5f0e8';
+const CORAL       = '#e8533a';
+const CORAL_LIGHT = '#f07a65';
+const GOLD        = '#c9a84c';
+const TEAL        = '#2a9d8f';
+const TEAL_LIGHT  = '#52b5a8';
+const MUTED       = '#8a99a8';
+const WHITE       = '#ffffff';
+
+const CONFIG = {
+  background: WHITE,
+  font: 'DM Sans',
+  title: {
+    font: 'Playfair Display',
+    fontWeight: 700,
+    fontSize: 14,
+    color: NAVY,
+    anchor: 'start',
+    offset: 12
+  },
+  axis: {
+    labelFont: 'DM Mono',
+    labelFontSize: 10,
+    labelColor: '#5a6a7a',
+    titleFont: 'DM Sans',
+    titleFontSize: 11,
+    titleColor: '#3d4f62',
+    gridColor: '#eaeef2',
+    gridOpacity: 0.8,
+    tickColor: '#c5ced8',
+    domainColor: '#c5ced8'
+  },
+  legend: {
+    labelFont: 'DM Mono',
+    labelFontSize: 10,
+    labelColor: '#3d4f62',
+    titleFont: 'DM Sans',
+    titleFontSize: 11,
+    titleColor: NAVY
+  },
+  view: { stroke: 'transparent' }
+};
+
+const EMBED_OPT = {
+  actions: { export: true, source: false, compiled: false, editor: false },
+  renderer: 'svg',
+  theme: 'none'
+};
+
+// CHART 1 — Labour Force Growth Trend (2021–2026)
+fetch('../charts/lfbt.json')
+  .then(res => res.json())
+  .then(spec => {
+    spec.config = CONFIG;
+    vegaEmbed('#chart1', spec, EMBED_OPT);
+  });
+
+// CHART 2 — Unemployment Rate Trend
+vegaEmbed('#chart2', 'charts/unemployment_trend.json', EMBED_OPT);
+
+// CHART 3 — Employment by Sector
+vegaEmbed('#chart3', 'charts/employment_by_sector.json', EMBED_OPT);
+
+// CHART 4 — Employment by Status
+fetch('../charts/employment_by_status.json')
+  .then(res => res.json())
+  .then(spec => {
+    spec.config = CONFIG;
+    vegaEmbed('#chart4', spec, EMBED_OPT);
+  });
+
+// CHART 5 — Youth vs National Unemployment
+vegaEmbed('#chart5', 'charts/youth_vs_national_unemployment.json', EMBED_OPT);
+
+// CHART 6 — Labour Market Position by State
+fetch('charts/chart2_scatterplot.json')
+  .then(res => res.json())
+  .then(spec => {
+    spec.config = CONFIG;
+    vegaEmbed('#chart6', spec, EMBED_OPT);
+  });
+
+// CHART 7 — Unemployment by Duration
+fetch('../charts/unemployment_by_duration.json')
+  .then(res => res.json())
+  .then(spec => {
+    spec.config = CONFIG;
+    vegaEmbed('#chart7', spec, EMBED_OPT);
+  });
+
+// CHART 8 — Unemployment Rate by Age Group (bar)
+vegaEmbed('#chart8', 'charts/wage_by_age_group.json', EMBED_OPT);
+
+// CHART 9 — Choropleth Map
+fetch('../charts/choropleth_map.json')
+  .then(res => res.json())
+  .then(spec => {
+    spec.config = CONFIG;
+    vegaEmbed('#chart9', spec, EMBED_OPT);
+  });
+  
+// CHART 10 — Median Wage by Sector Over Time
+fetch('../charts/wage_by_national_median.json')
+  .then(res => res.json())
+  .then(spec => {
+    spec.config = CONFIG;
+    vegaEmbed('#chart10', spec, EMBED_OPT);
+  });
+</script>
 </body>
 </html>

@@ -1,30 +1,620 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Youth vs National Unemployment Rate (2021–2025)",
-    "subtitle": "Young Malaysians aged 15–30 face unemployment rates far above the national average",
+    "text": "Youth vs National Unemployment Rate (2021-2025)",
+    "subtitle": "Malaysians aged 15-30 face unemployment rates consistently above the national average",
     "fontSize": 16,
     "subtitleFontSize": 12,
     "anchor": "start",
     "fontWeight": "normal",
     "subtitleColor": "#666"
   },
-  "width": 600,
-  "height": 300,
+  "width": "container",
+  "height": 420,
   "data": {
-    "url": "data/lfs_month_youth.csv"
+    "values": [
+      {
+        "date": "2021-01-01",
+        "rate": 9.2,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2021-01-01",
+        "rate": 4.9,
+        "group": "National"
+      },
+      {
+        "date": "2021-02-01",
+        "rate": 9.2,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2021-02-01",
+        "rate": 4.8,
+        "group": "National"
+      },
+      {
+        "date": "2021-03-01",
+        "rate": 9.3,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2021-03-01",
+        "rate": 4.7,
+        "group": "National"
+      },
+      {
+        "date": "2021-04-01",
+        "rate": 8.7,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2021-04-01",
+        "rate": 4.6,
+        "group": "National"
+      },
+      {
+        "date": "2021-05-01",
+        "rate": 9.2,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2021-05-01",
+        "rate": 4.5,
+        "group": "National"
+      },
+      {
+        "date": "2021-06-01",
+        "rate": 9.4,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2021-06-01",
+        "rate": 4.8,
+        "group": "National"
+      },
+      {
+        "date": "2021-07-01",
+        "rate": 8.5,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2021-07-01",
+        "rate": 4.8,
+        "group": "National"
+      },
+      {
+        "date": "2021-08-01",
+        "rate": 8.8,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2021-08-01",
+        "rate": 4.6,
+        "group": "National"
+      },
+      {
+        "date": "2021-09-01",
+        "rate": 8.5,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2021-09-01",
+        "rate": 4.5,
+        "group": "National"
+      },
+      {
+        "date": "2021-10-01",
+        "rate": 8.1,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2021-10-01",
+        "rate": 4.3,
+        "group": "National"
+      },
+      {
+        "date": "2021-11-01",
+        "rate": 8.2,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2021-11-01",
+        "rate": 4.3,
+        "group": "National"
+      },
+      {
+        "date": "2021-12-01",
+        "rate": 8.5,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2021-12-01",
+        "rate": 4.2,
+        "group": "National"
+      },
+      {
+        "date": "2022-01-01",
+        "rate": 8.3,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2022-01-01",
+        "rate": 4.2,
+        "group": "National"
+      },
+      {
+        "date": "2022-02-01",
+        "rate": 8.1,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2022-02-01",
+        "rate": 4.1,
+        "group": "National"
+      },
+      {
+        "date": "2022-03-01",
+        "rate": 8.0,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2022-03-01",
+        "rate": 4.1,
+        "group": "National"
+      },
+      {
+        "date": "2022-04-01",
+        "rate": 7.7,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2022-04-01",
+        "rate": 3.9,
+        "group": "National"
+      },
+      {
+        "date": "2022-05-01",
+        "rate": 7.4,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2022-05-01",
+        "rate": 3.9,
+        "group": "National"
+      },
+      {
+        "date": "2022-06-01",
+        "rate": 7.4,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2022-06-01",
+        "rate": 3.8,
+        "group": "National"
+      },
+      {
+        "date": "2022-07-01",
+        "rate": 7.4,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2022-07-01",
+        "rate": 3.7,
+        "group": "National"
+      },
+      {
+        "date": "2022-08-01",
+        "rate": 7.1,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2022-08-01",
+        "rate": 3.7,
+        "group": "National"
+      },
+      {
+        "date": "2022-09-01",
+        "rate": 7.1,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2022-09-01",
+        "rate": 3.6,
+        "group": "National"
+      },
+      {
+        "date": "2022-10-01",
+        "rate": 7.4,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2022-10-01",
+        "rate": 3.6,
+        "group": "National"
+      },
+      {
+        "date": "2022-11-01",
+        "rate": 7.0,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2022-11-01",
+        "rate": 3.6,
+        "group": "National"
+      },
+      {
+        "date": "2022-12-01",
+        "rate": 6.9,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2022-12-01",
+        "rate": 3.6,
+        "group": "National"
+      },
+      {
+        "date": "2023-01-01",
+        "rate": 7.0,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2023-01-01",
+        "rate": 3.6,
+        "group": "National"
+      },
+      {
+        "date": "2023-02-01",
+        "rate": 7.0,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2023-02-01",
+        "rate": 3.5,
+        "group": "National"
+      },
+      {
+        "date": "2023-03-01",
+        "rate": 7.1,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2023-03-01",
+        "rate": 3.5,
+        "group": "National"
+      },
+      {
+        "date": "2023-04-01",
+        "rate": 6.7,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2023-04-01",
+        "rate": 3.5,
+        "group": "National"
+      },
+      {
+        "date": "2023-05-01",
+        "rate": 7.0,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2023-05-01",
+        "rate": 3.5,
+        "group": "National"
+      },
+      {
+        "date": "2023-06-01",
+        "rate": 6.9,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2023-06-01",
+        "rate": 3.4,
+        "group": "National"
+      },
+      {
+        "date": "2023-07-01",
+        "rate": 6.8,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2023-07-01",
+        "rate": 3.4,
+        "group": "National"
+      },
+      {
+        "date": "2023-08-01",
+        "rate": 6.8,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2023-08-01",
+        "rate": 3.4,
+        "group": "National"
+      },
+      {
+        "date": "2023-09-01",
+        "rate": 6.7,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2023-09-01",
+        "rate": 3.4,
+        "group": "National"
+      },
+      {
+        "date": "2023-10-01",
+        "rate": 6.6,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2023-10-01",
+        "rate": 3.4,
+        "group": "National"
+      },
+      {
+        "date": "2023-11-01",
+        "rate": 6.5,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2023-11-01",
+        "rate": 3.3,
+        "group": "National"
+      },
+      {
+        "date": "2023-12-01",
+        "rate": 6.4,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2023-12-01",
+        "rate": 3.3,
+        "group": "National"
+      },
+      {
+        "date": "2024-01-01",
+        "rate": 6.9,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2024-01-01",
+        "rate": 3.3,
+        "group": "National"
+      },
+      {
+        "date": "2024-02-01",
+        "rate": 6.9,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2024-02-01",
+        "rate": 3.3,
+        "group": "National"
+      },
+      {
+        "date": "2024-03-01",
+        "rate": 6.9,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2024-03-01",
+        "rate": 3.3,
+        "group": "National"
+      },
+      {
+        "date": "2024-04-01",
+        "rate": 6.8,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2024-04-01",
+        "rate": 3.3,
+        "group": "National"
+      },
+      {
+        "date": "2024-05-01",
+        "rate": 6.7,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2024-05-01",
+        "rate": 3.3,
+        "group": "National"
+      },
+      {
+        "date": "2024-06-01",
+        "rate": 6.7,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2024-06-01",
+        "rate": 3.3,
+        "group": "National"
+      },
+      {
+        "date": "2024-07-01",
+        "rate": 6.6,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2024-07-01",
+        "rate": 3.3,
+        "group": "National"
+      },
+      {
+        "date": "2024-08-01",
+        "rate": 6.6,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2024-08-01",
+        "rate": 3.2,
+        "group": "National"
+      },
+      {
+        "date": "2024-09-01",
+        "rate": 6.4,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2024-09-01",
+        "rate": 3.2,
+        "group": "National"
+      },
+      {
+        "date": "2024-10-01",
+        "rate": 6.3,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2024-10-01",
+        "rate": 3.2,
+        "group": "National"
+      },
+      {
+        "date": "2024-11-01",
+        "rate": 6.3,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2024-11-01",
+        "rate": 3.2,
+        "group": "National"
+      },
+      {
+        "date": "2024-12-01",
+        "rate": 6.3,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2024-12-01",
+        "rate": 3.1,
+        "group": "National"
+      },
+      {
+        "date": "2025-01-01",
+        "rate": 6.4,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2025-01-01",
+        "rate": 3.1,
+        "group": "National"
+      },
+      {
+        "date": "2025-02-01",
+        "rate": 6.4,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2025-02-01",
+        "rate": 3.1,
+        "group": "National"
+      },
+      {
+        "date": "2025-03-01",
+        "rate": 6.3,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2025-03-01",
+        "rate": 3.1,
+        "group": "National"
+      },
+      {
+        "date": "2025-04-01",
+        "rate": 6.2,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2025-04-01",
+        "rate": 3.0,
+        "group": "National"
+      },
+      {
+        "date": "2025-05-01",
+        "rate": 6.2,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2025-05-01",
+        "rate": 3.0,
+        "group": "National"
+      },
+      {
+        "date": "2025-06-01",
+        "rate": 6.2,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2025-06-01",
+        "rate": 3.0,
+        "group": "National"
+      },
+      {
+        "date": "2025-07-01",
+        "rate": 6.2,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2025-07-01",
+        "rate": 3.0,
+        "group": "National"
+      },
+      {
+        "date": "2025-08-01",
+        "rate": 6.2,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2025-08-01",
+        "rate": 3.0,
+        "group": "National"
+      },
+      {
+        "date": "2025-09-01",
+        "rate": 6.2,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2025-09-01",
+        "rate": 3.0,
+        "group": "National"
+      },
+      {
+        "date": "2025-10-01",
+        "rate": 6.1,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2025-10-01",
+        "rate": 3.0,
+        "group": "National"
+      },
+      {
+        "date": "2025-11-01",
+        "rate": 6.1,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2025-11-01",
+        "rate": 2.9,
+        "group": "National"
+      },
+      {
+        "date": "2025-12-01",
+        "rate": 6.2,
+        "group": "Youth (15-30)"
+      },
+      {
+        "date": "2025-12-01",
+        "rate": 2.9,
+        "group": "National"
+      }
+    ]
   },
-  "transform": [
-    { "filter": "year(datum.date) >= 2021" },
-    {
-      "fold": ["u_rate_15_30", "u_rate_15_24"],
-      "as": ["group", "rate"]
-    },
-    {
-      "calculate": "datum.group === 'u_rate_15_30' ? 'Youth (15–30)' : 'Youth (15–24)'",
-      "as": "group_label"
-    }
-  ],
   "mark": {
     "type": "line",
     "strokeWidth": 2.5
@@ -34,33 +624,68 @@
       "field": "date",
       "type": "temporal",
       "title": null,
-      "axis": { "format": "%b %Y", "labelAngle": -30, "tickCount": 12 }
+      "axis": {
+        "format": "%b %Y",
+        "labelAngle": -30,
+        "tickCount": 12
+      }
     },
     "y": {
       "field": "rate",
       "type": "quantitative",
       "title": "Unemployment Rate (%)",
-      "scale": { "zero": false },
-      "axis": { "grid": true, "gridColor": "#f0f0f0" }
+      "scale": {
+  "domain": [0, 15]
+},
+      "axis": {
+        "grid": true,
+        "gridColor": "#f0f0f0"
+      }
     },
     "color": {
-      "field": "group_label",
+      "field": "group",
       "type": "nominal",
-      "title": "Age Group",
+      "title": "Group",
       "scale": {
-        "domain": ["Youth (15–30)", "Youth (15–24)"],
-        "range": ["#D4537E", "#EF9F27"]
+        "domain": [
+          "Youth (15-30)",
+          "National"
+        ],
+        "range": [
+          "#D4537E",
+          "#378ADD"
+        ]
       },
-      "legend": { "orient": "top-left" }
+      "legend": {
+        "orient": "top-right"
+      }
     },
     "tooltip": [
-      { "field": "date", "type": "temporal", "title": "Month", "format": "%B %Y" },
-      { "field": "group_label", "type": "nominal", "title": "Group" },
-      { "field": "rate", "type": "quantitative", "title": "Rate (%)", "format": ".1f" }
+      {
+        "field": "date",
+        "type": "temporal",
+        "title": "Month",
+        "format": "%B %Y"
+      },
+      {
+        "field": "group",
+        "type": "nominal",
+        "title": "Group"
+      },
+      {
+        "field": "rate",
+        "type": "quantitative",
+        "title": "Rate (%)",
+        "format": ".1f"
+      }
     ]
   },
   "config": {
-    "view": { "stroke": null },
-    "axis": { "grid": false }
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "grid": false
+    }
   }
 }

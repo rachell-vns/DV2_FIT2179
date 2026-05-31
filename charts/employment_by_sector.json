@@ -1,0 +1,82 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Employment Share by Sector (2001–2022)",
+    "subtitle": "% of employed persons — Agriculture, Industry, Services — by sex",
+    "subtitleFontStyle": "italic",
+    "subtitleFontSize": 11,
+    "anchor": "start"
+  },
+  "data": {
+    "url": "../data/employment_sector.csv",
+    "format": { "type": "csv" }
+  },
+  "transform": [
+    { "filter": "datum.sex !== 'both'" },
+    {
+      "calculate": "datum.sector === 'agriculture' ? 'Agriculture' : datum.sector === 'industry' ? 'Industry' : 'Services'",
+      "as": "Sector"
+    },
+    {
+      "calculate": "datum.sex === 'male' ? 'Male' : 'Female'",
+      "as": "Sex"
+    }
+  ],
+  "facet": {
+    "field": "Sex",
+    "type": "nominal",
+    "header": {
+      "title": null,
+      "labelFontSize": 12,
+      "labelFontWeight": 600,
+      "labelFont": "DM Sans",
+      "labelPadding": 8
+    }
+  },
+  "columns": 2,
+  "spec": {
+    "width": 500,
+    "height": 420,
+    "layer": [
+      {
+        "mark": { "type": "area", "interpolate": "monotone", "opacity": 0.85 },
+        "encoding": {
+          "x": {
+            "field": "date", "type": "temporal", "timeUnit": "year",
+            "axis": { "title": null, "format": "%Y", "tickCount": 8, "labelAngle": -30, "labelFontSize": 10, "grid": false }
+          },
+          "y": {
+            "field": "proportion", "type": "quantitative", "stack": "normalize",
+            "axis": { "title": "Share of Employment", "format": ".0%", "tickCount": 5, "labelFontSize": 10 }
+          },
+          "color": {
+            "field": "Sector", "type": "nominal",
+            "scale": {
+              "domain": ["Agriculture", "Industry", "Services"],
+              "range": ["#e8533a", "#2a9d8f", "#2d4a66"]
+            },
+            "legend": { "title": null, "orient": "bottom", "direction": "horizontal", "labelFontSize": 11, "symbolSize": 120, "padding": 8 }
+          },
+          "order": { "field": "Sector", "sort": ["Agriculture", "Industry", "Services"] },
+          "tooltip": [
+            { "field": "date",       "type": "temporal",     "timeUnit": "year", "title": "Year",       "format": "%Y"  },
+            { "field": "Sex",        "type": "nominal",                          "title": "Sex"                         },
+            { "field": "Sector",     "type": "nominal",                          "title": "Sector"                      },
+            { "field": "proportion", "type": "quantitative",                     "title": "Share (%)",  "format": ".1f" }
+          ]
+        }
+      },
+      {
+        "mark": { "type": "rule", "strokeDash": [4, 4], "color": "#e8533a", "opacity": 0.45, "strokeWidth": 1.5 },
+        "data": { "values": [{ "date": "2020-01-01" }] },
+        "encoding": { "x": { "field": "date", "type": "temporal", "timeUnit": "year" } }
+      },
+      {
+        "mark": { "type": "text", "text": "COVID-19", "color": "#e8533a", "fontSize": 8, "font": "DM Mono", "angle": 90, "align": "right", "dx": -4, "dy": -80 },
+        "data": { "values": [{ "date": "2020-01-01" }] },
+        "encoding": { "x": { "field": "date", "type": "temporal", "timeUnit": "year" } }
+      }
+    ]
+  },
+  "resolve": { "scale": { "y": "shared", "color": "shared" } }
+}

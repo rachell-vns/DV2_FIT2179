@@ -1,94 +1,125 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "National Median Monthly Wage, Malaysia (2021–2024)",
-    "subtitle": "Median wage has grown steadily, recovering from the COVID-19 dip in 2020",
+    "text": "Median Wage by Age Group vs Minimum Wage",
+    "subtitle": "Median wage (RM) by age group, 2021–2024. Dashed lines show minimum wage threshold each year.",
     "fontSize": 16,
     "subtitleFontSize": 12,
-    "anchor": "start",
-    "fontWeight": "normal",
-    "subtitleColor": "#666"
+    "anchor": "start"
   },
-  "width": 500,
-  "height": 280,
-  "data": {
-    "values": [
-      {"year": "2021", "median_wage": 2256, "annotation": "Post-COVID recovery"},
-      {"year": "2022", "median_wage": 2429, "annotation": ""},
-      {"year": "2023", "median_wage": 2602, "annotation": ""},
-      {"year": "2024", "median_wage": 2793, "annotation": "Latest"}
-    ]
-  },
+  "width": "container",
+  "height": 420,
   "layer": [
     {
-      "mark": {
-        "type": "area",
-        "line": { "color": "#378ADD", "strokeWidth": 2.5 },
-        "color": "#378ADD",
-        "opacity": 0.1
-      },
+      "data": {"url": "data/wages_median_age.csv"},
+      "mark": {"type": "bar", "tooltip": true},
       "encoding": {
         "x": {
-          "field": "year",
+          "field": "age_group",
           "type": "ordinal",
-          "title": null,
-          "axis": { "labelAngle": 0 }
+          "title": "Age group",
+          "sort": ["15-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64"],
+          "axis": {"labelAngle": 0}
+        },
+        "xOffset": {
+          "field": "year",
+          "type": "ordinal"
         },
         "y": {
-          "field": "median_wage",
+          "field": "wage",
           "type": "quantitative",
-          "title": "Median Monthly Wage (RM)",
-          "scale": { "zero": false },
-          "axis": { "grid": true, "gridColor": "#f0f0f0", "format": ",.0f" }
-        }
-      }
-    },
-    {
-      "mark": {
-        "type": "point",
-        "filled": true,
-        "size": 80,
-        "color": "#378ADD"
-      },
-      "encoding": {
-        "x": { "field": "year", "type": "ordinal" },
-        "y": { "field": "median_wage", "type": "quantitative" },
+          "title": "Median wage (RM)",
+          "scale": {"domainMin": 0},
+          "axis": {"grid": true, "gridColor": "#e8e8e8"}
+        },
+        "color": {
+          "field": "year",
+          "type": "ordinal",
+          "title": "Year",
+          "scale": {
+            "domain": ["2021", "2022", "2023", "2024"],
+            "range": ["#B5D4F4", "#378ADD", "#185FA5", "#042C53"]
+          },
+          "legend": {
+            "title": "Year",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "symbolType": "square",
+            "symbolSize": 120,
+            "titleOrient": "left"
+          }
+        },
         "tooltip": [
-          { "field": "year", "type": "ordinal", "title": "Year" },
-          { "field": "median_wage", "type": "quantitative", "title": "Median Wage (RM)", "format": ",.0f" }
+          {"field": "age_group", "type": "ordinal", "title": "Age group"},
+          {"field": "year", "type": "ordinal", "title": "Year"},
+          {"field": "wage", "type": "quantitative", "title": "Median wage (RM)", "format": ","}
         ]
       }
     },
     {
+      "data": {"url": "wages_median_age.csv"},
       "mark": {
         "type": "text",
-        "dy": -14,
-        "fontSize": 12,
-        "fontWeight": "bold",
-        "color": "#378ADD"
+        "dy": -6,
+        "fontSize": 8,
+        "fontWeight": "bold"
       },
       "encoding": {
-        "x": { "field": "year", "type": "ordinal" },
-        "y": { "field": "median_wage", "type": "quantitative" },
-        "text": { "field": "median_wage", "type": "quantitative", "format": ",.0f" }
+        "x": {
+          "field": "age_group",
+          "type": "ordinal",
+          "sort": ["15-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64"]
+        },
+        "xOffset": {
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "wage",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "wage",
+          "type": "quantitative",
+          "format": ","
+        },
+        "color": {
+          "condition": {
+            "test": "datum.year == '2021' && datum.wage < 1200 || datum.year == '2022' && datum.wage < 1500 || datum.year == '2023' && datum.wage < 1500 || datum.year == '2024' && datum.wage < 1700",
+            "value": "#A32D2D"
+          },
+          "value": "#444441"
+        }
       }
     },
     {
+      "data": {
+        "values": [
+          {"min_wage": 1200, "label": "RM 1,200 (2021)"},
+          {"min_wage": 1500, "label": "RM 1,500 (2022–23)"},
+          {"min_wage": 1700, "label": "RM 1,700 (2024)"}
+        ]
+      },
       "mark": {
-        "type": "text",
-        "dy": -28,
-        "fontSize": 10,
-        "color": "#999"
+        "type": "rule",
+        "strokeDash": [6, 3],
+        "strokeWidth": 2,
+        "color": "#888780"
       },
       "encoding": {
-        "x": { "field": "year", "type": "ordinal" },
-        "y": { "field": "median_wage", "type": "quantitative" },
-        "text": { "field": "annotation", "type": "nominal" }
+        "y": {
+          "field": "min_wage",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {"field": "label", "type": "nominal", "title": "Minimum wage"},
+          {"field": "min_wage", "type": "quantitative", "title": "RM", "format": ","}
+        ]
       }
     }
   ],
   "config": {
-    "view": { "stroke": null },
-    "axis": { "grid": false, "labelFont": "sans-serif", "titleFont": "sans-serif" }
+    "view": {"stroke": "transparent"},
+    "bar": {"cornerRadiusEnd": 2}
   }
 }

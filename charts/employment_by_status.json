@@ -1,0 +1,89 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Malaysia's Workforce is Moving Away from Wage Employment",
+    "anchor": "start"
+  },
+  "data": {
+    "url": "../data/lfs_month_status.csv",
+    "format": { "type": "csv" }
+  },
+  "transform": [
+    { "filter": "datum.variable === 'share'" },
+    { "filter": "year(datum.date) < 2026" },
+    {
+      "fold": ["employed_employer", "employed_employee", "employed_own_account", "employed_unpaid_family"],
+      "as": ["status_key", "pct"]
+    },
+    {
+      "calculate": "datum.status_key === 'employed_employee' ? 'Employees' : datum.status_key === 'employed_employer' ? 'Employers' : datum.status_key === 'employed_own_account' ? 'Own-account workers' : 'Unpaid family workers'",
+      "as": "Status"
+    },
+    {
+      "calculate": "year(datum.date) + (month(datum.date) / 12)",
+      "as": "time"
+    },
+    {
+      "window": [{ "op": "first_value", "field": "pct", "as": "baseline" }],
+      "groupby": ["Status"],
+      "sort": [{ "field": "date", "order": "ascending" }],
+      "frame": [null, null]
+    },
+    {
+      "calculate": "datum.pct - datum.baseline",
+      "as": "change_pp"
+    }
+  ],
+  "width": 1000,
+  "height": 380,
+  "layer": [
+    {
+      "mark": { "type": "rule", "strokeDash": [3, 3], "color": "#ccc", "strokeWidth": 1 },
+      "encoding": {
+        "y": { "datum": 0 }
+      }
+    },
+    {
+      "mark": { "type": "area", "interpolate": "monotone", "opacity": 0.15 },
+      "encoding": {
+        "x": {
+          "field": "date", "type": "temporal",
+          "axis": { "title": null, "format": "%Y", "tickCount": 5, "labelAngle": 0, "labelFontSize": 10, "grid": false }
+        },
+        "y": {
+          "field": "change_pp", "type": "quantitative",
+          "axis": { "title": "Change (pp)", "tickCount": 6, "labelFontSize": 10, "grid": true, "gridOpacity": 0.3, "format": "+.1f" }
+        },
+        "y2": { "datum": 0 },
+        "color": {
+          "field": "Status", "type": "nominal",
+          "scale": {
+            "domain": ["Employees", "Own-account workers", "Employers", "Unpaid family workers"],
+            "range": ["#2d4a66", "#e8533a", "#2a9d8f", "#e9c46a"]
+          }
+        }
+      }
+    },
+    {
+      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.5 },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "change_pp", "type": "quantitative" },
+        "color": {
+          "field": "Status", "type": "nominal",
+          "scale": {
+            "domain": ["Employees", "Own-account workers", "Employers", "Unpaid family workers"],
+            "range": ["#2d4a66", "#e8533a", "#2a9d8f", "#e9c46a"]
+          },
+          "legend": { "title": "Employment Status", "orient": "bottom", "labelLimit": 200, "columns": 2, "labelFontSize": 10 }
+        },
+        "tooltip": [
+          { "field": "date",      "type": "temporal",     "title": "Month",        "format": "%B %Y" },
+          { "field": "Status",    "type": "nominal",       "title": "Status"                          },
+          { "field": "pct",       "type": "quantitative",  "title": "Share (%)",    "format": ".1f"   },
+          { "field": "change_pp", "type": "quantitative",  "title": "Change (pp)",  "format": "+.2f"  }
+        ]
+      }
+    }
+  ]
+}

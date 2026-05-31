@@ -1,0 +1,21 @@
+.chart-card {
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+#chart1, #chart2, #chart3, #chart4, #chart5,
+#chart6, #chart7, #chart8, #chart9, #chart10,
+#chart11, #chart12, #chart13 {
+  flex: 1;
+  min-height: 0;        /* ← prevents flex children from overflowing */
+  overflow: hidden;
+}
+
+/* force the vega-embed wrapper to fill its container */
+.chart-card .vega-embed,
+.chart-card .vega-embed canvas,
+.chart-card .vega-embed svg {
+  width: 100% !important;
+  height: 100% !important;
+}

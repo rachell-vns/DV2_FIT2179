@@ -1,96 +1,136 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Mean Monthly Wage by Age Group, Malaysia (2024)",
-    "subtitle": "Workers aged 45–54 earn the highest wages; young workers aged 15–24 earn well below average",
-    "fontSize": 16,
-    "subtitleFontSize": 12,
-    "anchor": "start",
-    "fontWeight": "normal",
-    "subtitleColor": "#666"
+    "text": "Young Workers' Wages Are Catching Up — But the Gap Remains Wide",
+    "subtitle": "Median monthly wage (RM) by age group 2021–2024. Youth (15–24) grew fastest (+37–47%) driven by minimum wage hikes",
+    "subtitleFontStyle": "italic",
+    "subtitleFontSize": 11,
+    "anchor": "start"
   },
-  "width": 500,
-  "height": 320,
+  "width": "container",
+  "height": 440,
+  "padding": { "top": 8, "bottom": 8, "left": 8, "right": 80 },
   "data": {
     "values": [
-      {"age_group": "15-19", "mean_wage": 2161, "category": "Below national mean"},
-      {"age_group": "20-24", "mean_wage": 2255, "category": "Below national mean"},
-      {"age_group": "25-29", "mean_wage": 2946, "category": "Below national mean"},
-      {"age_group": "30-34", "mean_wage": 3381, "category": "Below national mean"},
-      {"age_group": "35-39", "mean_wage": 4013, "category": "Above national mean"},
-      {"age_group": "40-44", "mean_wage": 4395, "category": "Above national mean"},
-      {"age_group": "45-49", "mean_wage": 4517, "category": "Above national mean"},
-      {"age_group": "50-54", "mean_wage": 4495, "category": "Above national mean"},
-      {"age_group": "55-59", "mean_wage": 4463, "category": "Above national mean"},
-      {"age_group": "60-64", "mean_wage": 3373, "category": "Below national mean"}
+      {"age_group":"15-19","year":2021,"wage":1465},
+      {"age_group":"15-19","year":2022,"wage":1638},
+      {"age_group":"15-19","year":2023,"wage":1879},
+      {"age_group":"15-19","year":2024,"wage":2161},
+      {"age_group":"20-24","year":2021,"wage":1640},
+      {"age_group":"20-24","year":2022,"wage":1780},
+      {"age_group":"20-24","year":2023,"wage":2061},
+      {"age_group":"20-24","year":2024,"wage":2255},
+      {"age_group":"25-29","year":2021,"wage":2289},
+      {"age_group":"25-29","year":2022,"wage":2490},
+      {"age_group":"25-29","year":2023,"wage":2746},
+      {"age_group":"25-29","year":2024,"wage":2946},
+      {"age_group":"30-34","year":2021,"wage":2999},
+      {"age_group":"30-34","year":2022,"wage":3123},
+      {"age_group":"30-34","year":2023,"wage":3297},
+      {"age_group":"30-34","year":2024,"wage":3381},
+      {"age_group":"35-39","year":2021,"wage":3424},
+      {"age_group":"35-39","year":2022,"wage":3556},
+      {"age_group":"35-39","year":2023,"wage":3765},
+      {"age_group":"35-39","year":2024,"wage":4013},
+      {"age_group":"40-44","year":2021,"wage":3815},
+      {"age_group":"40-44","year":2022,"wage":4025},
+      {"age_group":"40-44","year":2023,"wage":4241},
+      {"age_group":"40-44","year":2024,"wage":4395},
+      {"age_group":"45-49","year":2021,"wage":3827},
+      {"age_group":"45-49","year":2022,"wage":4107},
+      {"age_group":"45-49","year":2023,"wage":4237},
+      {"age_group":"45-49","year":2024,"wage":4517},
+      {"age_group":"50-54","year":2021,"wage":3776},
+      {"age_group":"50-54","year":2022,"wage":3977},
+      {"age_group":"50-54","year":2023,"wage":4161},
+      {"age_group":"50-54","year":2024,"wage":4495},
+      {"age_group":"55-59","year":2021,"wage":3810},
+      {"age_group":"55-59","year":2022,"wage":3933},
+      {"age_group":"55-59","year":2023,"wage":4098},
+      {"age_group":"55-59","year":2024,"wage":4463},
+      {"age_group":"60-64","year":2021,"wage":2802},
+      {"age_group":"60-64","year":2022,"wage":2967},
+      {"age_group":"60-64","year":2023,"wage":3182},
+      {"age_group":"60-64","year":2024,"wage":3373}
     ]
   },
   "layer": [
     {
-      "mark": { "type": "bar", "cornerRadiusEnd": 3 },
+      "mark": { "type": "line", "interpolate": "monotone" },
       "encoding": {
-        "y": {
-          "field": "age_group",
-          "type": "ordinal",
-          "title": "Age Group",
-          "sort": ["15-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64"]
-        },
         "x": {
-          "field": "mean_wage",
-          "type": "quantitative",
-          "title": "Mean Monthly Wage (RM)",
-          "axis": { "grid": true, "gridColor": "#f0f0f0", "format": ",.0f" }
+          "field": "year", "type": "ordinal",
+          "axis": { "title": null, "labelAngle": 0, "labelFontSize": 10 }
         },
-        "color": {
-          "field": "category",
-          "type": "nominal",
-          "title": "Legend",
-          "scale": {
-            "domain": ["Above national mean", "Below national mean"],
-            "range": ["#1D9E75", "#378ADD"]
-          },
-          "legend": {
-            "orient": "bottom",
-            "direction": "horizontal",
-            "titleFontSize": 11,
-            "labelFontSize": 11
+        "y": {
+          "field": "wage", "type": "quantitative",
+          "axis": {
+            "title": "Median Monthly Wage (RM)",
+            "titleFontSize": 10, "labelFontSize": 10,
+            "format": ",.0f", "tickCount": 5,
+            "grid": true, "gridOpacity": 0.3
           }
         },
+        "color": {
+          "field": "age_group", "type": "nominal",
+          "sort": ["15-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64"],
+          "scale": {
+            "domain": ["15-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64"],
+            "range": ["#B84C00","#A06800","#5A7A00","#007A55","#0063A6","#004F8C","#6A3D9A","#8B3A62","#555555","#222222"]
+          },
+          "legend": {
+            "title": "Age Group",
+            "orient": "right",
+            "labelFontSize": 10,
+            "titleFontSize": 11,
+            "symbolStrokeWidth": 3,
+            "symbolType": "stroke"
+          }
+        },
+        "opacity": {
+          "condition": [
+            { "test": "datum.age_group === '15-19' || datum.age_group === '20-24'", "value": 1 }
+          ],
+          "value": 0.3
+        },
+        "strokeWidth": {
+          "condition": [
+            { "test": "datum.age_group === '15-19' || datum.age_group === '20-24'", "value": 5 }
+          ],
+          "value": 2
+        },
         "tooltip": [
-          { "field": "age_group", "type": "ordinal", "title": "Age Group" },
-          { "field": "mean_wage", "type": "quantitative", "title": "Mean Wage (RM)", "format": ",.0f" },
-          { "field": "category", "type": "nominal", "title": "Category" }
+          { "field": "age_group", "type": "nominal",     "title": "Age Group"         },
+          { "field": "year",      "type": "ordinal",      "title": "Year"              },
+          { "field": "wage",      "type": "quantitative", "title": "Median Wage (RM)", "format": ",.0f" }
         ]
       }
     },
     {
-      "mark": {
-        "type": "rule",
-        "color": "#333",
-        "strokeDash": [4, 4],
-        "strokeWidth": 1.5
-      },
+      "mark": { "type": "point", "filled": true, "size": 100 },
       "encoding": {
-        "x": { "datum": 3652, "type": "quantitative" }
-      }
-    },
-    {
-      "mark": {
-        "type": "text",
-        "align": "left",
-        "dx": 4,
-        "fontSize": 11,
-        "color": "#333",
-        "y": 10
-      },
-      "encoding": {
-        "x": { "datum": 3652, "type": "quantitative" },
-        "text": { "value": "National mean RM3,652" }
+        "x": { "field": "year", "type": "ordinal" },
+        "y": { "field": "wage", "type": "quantitative" },
+        "color": {
+          "field": "age_group", "type": "nominal",
+          "scale": {
+            "domain": ["15-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64"],
+            "range": ["#B84C00","#A06800","#5A7A00","#007A55","#0063A6","#004F8C","#6A3D9A","#8B3A62","#555555","#222222"]
+          },
+          "legend": null
+        },
+        "opacity": {
+          "condition": [
+            { "test": "datum.age_group === '15-19' || datum.age_group === '20-24'", "value": 1 }
+          ],
+          "value": 0.3
+        },
+        "tooltip": [
+          { "field": "age_group", "type": "nominal",     "title": "Age Group"         },
+          { "field": "year",      "type": "ordinal",      "title": "Year"              },
+          { "field": "wage",      "type": "quantitative", "title": "Median Wage (RM)", "format": ",.0f" }
+        ]
       }
     }
-  ],
-  "config": {
-    "view": { "stroke": null },
-    "axis": { "grid": false }
-  }
+  ]
 }
