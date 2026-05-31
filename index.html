@@ -639,7 +639,7 @@ body {
       <div class="chart-card wide">
         <div class="chart-label">Chart 10 — Median Wage by Sector Over Time</div>
         <div class="annotation-box">
-          **Minimum wage hikes are lifting the floor — but the youngest workers are barely clearing it.** The 15–19 age group's median wage sat below the minimum wage threshold in earlier years, highlighted in red, only catching up as the floor rose. Workers aged 25 and above consistently earn well above the minimum, with wages peaking in the 40–54 range. The chart tells two stories at once: older workers enjoy a comfortable buffer above the legal minimum, while teenagers and young adults are essentially minimum wage workers with little room above the threshold.
+          Minimum wage hikes are lifting the floor — but the youngest workers are barely clearing it. The 15–19 age group's median wage sat below the minimum wage threshold in earlier years, highlighted in red, only catching up as the floor rose. Workers aged 25 and above consistently earn well above the minimum, with wages peaking in the 40–54 range. The chart tells two stories at once: older workers enjoy a comfortable buffer above the legal minimum, while teenagers and young adults are essentially minimum wage workers with little room above the threshold.
         <div id="chart10"></div>
       </div>
     </div>
@@ -764,7 +764,13 @@ fetch('charts/employment_by_status.json')
   });
 
 // CHART 5 — Youth vs National Unemployment
-vegaEmbed('#chart5', 'charts/youth_vs_national_unemployment.json', EMBED_OPT);
+fetch('charts/youth_vs_national_unemployment.json')
+  .then(res => res.json())
+  .then(spec => {
+    spec.config = CONFIG;
+    vegaEmbed('#chart5', spec, EMBED_OPT);
+  });
+
 
 // CHART 6 — Labour Market Position by State
 fetch('charts/chart2_scatterplot.json')
@@ -783,7 +789,7 @@ fetch('charts/unemployment_by_duration.json')
   });
 
 // CHART 8 — Unemployment Rate by Age Group (bar)
-fetch('charts/wage_by_age_group.json.json')
+fetch('charts/wage_by_age_group.json')
   .then(res => res.json())
   .then(spec => {
     spec.config = CONFIG;
