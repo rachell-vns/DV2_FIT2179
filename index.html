@@ -732,7 +732,7 @@ const EMBED_OPT = {
 };
 
 // CHART 1 — Labour Force Growth Trend (2021–2026)
-fetch('../charts/lfbt.json')
+fetch('charts/lfbt.json')
   .then(res => res.json())
   .then(spec => {
     spec.config = CONFIG;
@@ -746,7 +746,7 @@ vegaEmbed('#chart2', 'charts/unemployment_trend.json', EMBED_OPT);
 vegaEmbed('#chart3', 'charts/employment_by_sector.json', EMBED_OPT);
 
 // CHART 4 — Employment by Status
-fetch('../charts/employment_by_status.json')
+fetch('charts/employment_by_status.json')
   .then(res => res.json())
   .then(spec => {
     spec.config = CONFIG;
@@ -765,7 +765,7 @@ fetch('charts/chart2_scatterplot.json')
   });
 
 // CHART 7 — Unemployment by Duration
-fetch('../charts/unemployment_by_duration.json')
+fetch('charts/unemployment_by_duration.json')
   .then(res => res.json())
   .then(spec => {
     spec.config = CONFIG;
@@ -776,7 +776,7 @@ fetch('../charts/unemployment_by_duration.json')
 vegaEmbed('#chart8', 'charts/wage_by_age_group.json', EMBED_OPT);
 
 // CHART 9 — Choropleth Map
-fetch('../charts/choropleth_map.json')
+fetch('charts/choropleth_map.json')
   .then(res => res.json())
   .then(spec => {
     spec.config = CONFIG;
@@ -784,7 +784,7 @@ fetch('../charts/choropleth_map.json')
   });
   
 // CHART 10 — Median Wage by Sector Over Time
-fetch('../charts/wage_by_national_median.json')
+fetch('charts/wage_by_national_median.json')
   .then(res => res.json())
   .then(spec => {
     spec.config = CONFIG;

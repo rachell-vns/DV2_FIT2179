@@ -10,7 +10,7 @@
   "width": "container",
   "height": 420,
   "data": {
-    "url": "../data/lfs_month.csv",
+    "url": "data/lfs_month.csv",
     "format": { "type": "csv" }
   },
   "encoding": {
