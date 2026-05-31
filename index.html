@@ -740,10 +740,20 @@ fetch('charts/lfbt.json')
   });
 
 // CHART 2 — Unemployment Rate Trend
-vegaEmbed('#chart2', 'charts/unemployment_trend.json', EMBED_OPT);
+fetch('charts/unemployment_trend.json')
+  .then(res => res.json())
+  .then(spec => {
+    spec.config = CONFIG;
+    vegaEmbed('#chart2', spec, EMBED_OPT);
+  });
 
 // CHART 3 — Employment by Sector
-vegaEmbed('#chart3', 'charts/employment_by_sector.json', EMBED_OPT);
+fetch('charts/employment_by_sector.json')
+  .then(res => res.json())
+  .then(spec => {
+    spec.config = CONFIG;
+    vegaEmbed('#chart3', spec, EMBED_OPT);
+  });
 
 // CHART 4 — Employment by Status
 fetch('charts/employment_by_status.json')
@@ -773,7 +783,12 @@ fetch('charts/unemployment_by_duration.json')
   });
 
 // CHART 8 — Unemployment Rate by Age Group (bar)
-vegaEmbed('#chart8', 'charts/wage_by_age_group.json', EMBED_OPT);
+fetch('charts/wage_by_age_group.json.json')
+  .then(res => res.json())
+  .then(spec => {
+    spec.config = CONFIG;
+    vegaEmbed('#chart8', spec, EMBED_OPT);
+  });
 
 // CHART 9 — Choropleth Map
 fetch('charts/choropleth_map.json')
