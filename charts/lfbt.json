@@ -147,7 +147,7 @@
     },
     {
       "data": { "values": [{ "date": "2021-06-01", "lf": 15880 }] },
-      "mark": { "type": "text", "font": "DM Sans", "fontSize": 10, "fontWeight": 600, "color": "#e8533a", "align": "left", "dx": 6 },
+      "mark": { "type": "text", "font": "DM Sans", "fontSize": 10, "fontWeight": 600, "color": "#e8533a", "align": "right", "dx": 6 },
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
         "y": { "field": "lf", "type": "quantitative", "scale": { "domain": [15800, 17700], "zero": false } },
@@ -191,7 +191,7 @@
     },
     {
       "data": { "values": [{ "date": "2024-01-01", "lf": 15880 }] },
-      "mark": { "type": "text", "font": "DM Sans", "fontSize": 10, "fontWeight": 600, "color": "#aaaaaa", "align": "right", "dx": -6 },
+      "mark": { "type": "text", "font": "DM Sans", "fontSize": 10, "fontWeight": 600, "color": "#aaaaaa", "align": "left", "dx": -6 },
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
         "y": { "field": "lf", "type": "quantitative", "scale": { "domain": [15800, 17700], "zero": false } },
